@@ -1,0 +1,5 @@
+res_dir: Res
+scripts_dir: Res/Scripts
+sprites_dir: Res/Sprites
+textures_dir: Res/Textures
+projectsettings_dir: ProjectSettings

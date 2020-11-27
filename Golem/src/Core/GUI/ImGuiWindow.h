@@ -1,0 +1,32 @@
+/*
+ * ImGuiWindow.h
+ *
+ *  Created on: 17-Nov-2020
+ *      Author: anantha
+ */
+
+#ifndef CORE_GUI_IMGUIWINDOW_H_
+#define CORE_GUI_IMGUIWINDOW_H_
+
+namespace Golem {
+
+class ImGuiWindow {
+public:
+    ImGuiWindow();
+    virtual ~ImGuiWindow();
+
+    //bool isOpen();
+    virtual void update(){}
+    virtual void close(){ m_opened = false;}
+    virtual void open(){ m_opened = true;}
+
+    bool isOpen(){
+        return m_opened;
+    }
+private:
+    bool m_opened = false;
+};
+
+} /* namespace Golem */
+
+#endif /* CORE_GUI_IMGUIWINDOW_H_ */

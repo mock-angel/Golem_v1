@@ -1,0 +1,5 @@
+SceneList:
+  - m_SceneName: StartingScene
+    m_SceneEnabled: 1
+  - m_SceneName: NextScene
+    m_SceneEnabled: 1
