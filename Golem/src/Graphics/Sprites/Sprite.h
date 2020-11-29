@@ -11,6 +11,7 @@
 #include "../../Components/Renderable.h"
 #include "../Shader/Shader.h"
 #include "../Textures/Texture.h"
+#include "Core/Resource/ShaderResource.h"
 
 namespace Golem {
 
@@ -22,6 +23,7 @@ class Sprite : public Renderable {
     //Shader fragmentShader;
     //Shader vertexShader;
     Shader spriteShader;
+    ShaderRef m_spriteShader;
 
     int _VAO;
     /*float vertices[12] = {

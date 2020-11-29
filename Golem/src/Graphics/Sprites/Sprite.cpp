@@ -16,6 +16,7 @@
 #include "../../Debug.h"
 #include "../../Game.h"
 #include "../../Res/Scripts/Transform.h"
+#include "Core/Resource/ResourceManager.h"
 
 namespace Golem {
 
@@ -29,7 +30,8 @@ Sprite::Sprite()  : Renderable(){
     //setShader(Golem::Shader(vshader, fshader));
     setShader(Game::getShaderController().lock()->getShader("DefaultShader"));
     //const glm::vec3& v1 = Color::white.getVector();
-
+    m_spriteShader = ResourceManager::getInstance()->getResource<ShaderResource>("src/Res/Shaders/DefaultShader.shader");
+    if(m_spriteShader)Debug::log("test worked");
     unsigned int VBO, VBO2, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -110,14 +112,16 @@ void Sprite::render(std::weak_ptr<Transform> transform){
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, t.get());
 
-    spriteShader.use();
+    //spriteShader.use();
+    m_spriteShader->m_shader.use();
+
     glBindVertexArray(_VAO);
 
-    spriteShader.setVec3("ourColor", Color::white.getVector());
+    m_spriteShader->m_shader.setVec3("ourColor", Color::white.getVector());
 
     glm::mat4 projView_matrix = Game::getCamera().getClipMatrix();
 
-    spriteShader.setMat4("clip", projView_matrix * transform.lock()->getModelMatrix());
+    m_spriteShader->m_shader.setMat4("clip", projView_matrix * transform.lock()->getModelMatrix());
     //glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

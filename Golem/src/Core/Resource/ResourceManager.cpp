@@ -51,4 +51,16 @@ std::list<std::string> ResourceManager::getFilesInPath(std::string _path){
     return _retStr;
 }
 
+ResourceRef ResourceManager::getResource(const std::string& resPath){
+
+    load(resPath);
+    if(m_resources.find(resPath) != m_resources.end()){
+
+        const std::shared_ptr<Resource>& resource = m_resources[resPath];
+        resource->load();
+        return resource;
+    }
+    return nullptr;
+}
+
 } /* namespace Golem */

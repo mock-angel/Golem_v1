@@ -41,7 +41,7 @@ public:
     unsigned int getID() const {return ID;}
 
     unsigned int loadShaderFromFile(const char*  shaderPath, GLenum shaderType);
-    unsigned int loadShaderFromData(std::string& shaderCode, GLenum shaderType);
+    unsigned int loadShaderFromData(const std::string& shaderCode, GLenum shaderType);
 
     /*
     void loadFragmentShader(std::string fragmentPath);
