@@ -18,6 +18,7 @@ public:
 
     Shader m_shader;
     ShaderResource();
+    ShaderResource(const std::string& str);
     ~ShaderResource();
 
     virtual void onPrepare() override;
@@ -31,6 +32,8 @@ public:
         return m_shader.getID();
     }
 };
+
+using ShaderRef = std::shared_ptr<ShaderResource>;
 
 } /* namespace Golem */
 

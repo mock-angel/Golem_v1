@@ -20,8 +20,6 @@ NodeController::~NodeController() {
     Node::print("NodeController:: destructed");
 }
 
-
-
 void NodeController::addNode(std::shared_ptr<Node> t_node){
 
     assert(t_node || 0);

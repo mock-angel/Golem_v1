@@ -16,6 +16,8 @@
 #include "Debug.h"
 #include "Resource.h"
 #include "DirectoryTree.h"
+#include "Utils/ClassUtils.h"
+#include "ShaderResource.h"
 
 
 namespace Golem {
@@ -143,29 +145,21 @@ public:
     std::list<std::string> getFoldersInPath(std::string _path);
     std::list<std::string> getFilesInPath(std::string _path);
 
-    ResourceRef getResource(const std::string& path){
-        if(m_resources.find(path) == m_resources.end())
-            //Loadresource now
-            load(path);
-        return m_resources[path];
+    ResourceRef getResource(const std::string& resPath);
+
+    template<class T>
+    std::shared_ptr<T> getResource(const std::string& resPath){
+        const std::shared_ptr<Resource>& resource = getResource(resPath);
+        if(resource)
+            return std::dynamic_pointer_cast<T>(resource);
+        else
+            return nullptr;
     }
 
     inline DirectoryTree& getDirectoryTree(){
         return m_dirTree;
     }
 
-    template<class T>
-    std::shared_ptr<T> getResource(const std::string& resPath){
-
-        if(m_resources.find(resPath) != m_resources.end()){
-
-            const std::shared_ptr<Resource>& resource = m_resources[resPath];
-
-
-            return resource;
-        }
-
-    }
 private:
     GuidGenerator m_guidGen;
     //ProjectData m_projectData;
@@ -181,7 +175,12 @@ private:
 
     void load(const std::string& t_path){
         std::string localPath  = convertPathToLocal(t_path);
+        //FileUtils::loadFile();
+
+        if(m_resources.find(t_path) == m_resources.end())
+            m_resources[t_path] = std::make_shared<ShaderResource>(t_path);
     }
+
     std::string convertPathToLocal(const std::filesystem::path& t_path){
         std::string relativePath = t_path.lexically_relative(resHostDir);
 

@@ -22,10 +22,10 @@
 namespace Golem {
 
 Shader::Shader(const char*  vertexPath, const char* fragmentPath, const char* geometryPath){
-    std::cout << "Shader::Shader Construct Shader"<<std::endl;
+    std::cout << "Shader::Shader Construct Shader "<<vertexPath<<std::endl;
     unsigned int vertex, fragment, geometry;
-    vertex = loadShaderFromFile(vertexPath, GL_VERTEX_SHADER);
-    fragment = loadShaderFromFile(fragmentPath, GL_FRAGMENT_SHADER);
+    vertex = loadShaderFromData(vertexPath, GL_VERTEX_SHADER);
+    fragment = loadShaderFromData(fragmentPath, GL_FRAGMENT_SHADER);
     if(geometryPath!=nullptr) geometry = loadShaderFromFile(geometryPath, GL_GEOMETRY_SHADER);
     // shader Program
     ID = glCreateProgram();
@@ -109,7 +109,7 @@ unsigned int Shader::loadShaderFromFile(const char* shaderPath, GLenum shaderTyp
     return shader;
 }
 
-unsigned int Shader::loadShaderFromData(std::string& shaderCode, GLenum shaderType){
+unsigned int Shader::loadShaderFromData(const std::string& shaderCode, GLenum shaderType){
 
     const char* cShaderCode = shaderCode.c_str();
     //shader creation.

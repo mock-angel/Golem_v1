@@ -10,10 +10,10 @@
 
 #include "../LooseRef.h"
 #include <fstream>
-#include "Debug.h"
 #include <filesystem>
+#include <memory>
 
-
+#include "Debug.h"
 
 namespace Golem {
 
@@ -24,10 +24,7 @@ enum LoadState{
 };
 
 class Resource;
-//using ResourceRef = LooseRef<Resource>;
 using ResourceRef = std::shared_ptr<Resource>;
-
-
 
 class Resource {
 
@@ -76,8 +73,6 @@ private:
     std::string m_path;
     std::string m_data;
     LoadState m_loadState = LOADSTATE_UNLOADED;
-
-
 };
 
 } /* namespace Golem */
