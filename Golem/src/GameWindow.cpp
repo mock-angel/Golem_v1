@@ -10,6 +10,7 @@
 #include <iostream>
 #include <memory>
 
+#include "Debug.h"
 #include "Node.h"
 #include "Component.h"
 #include "Core/Math/Vector2.h"
@@ -18,6 +19,7 @@
 #include "Res/Scripts/Transform.h"
 #include "Res/Scripts/CameraScript.h"
 #include "imgui.h"
+#include "Components/ComponentTypeHolder.h"
 
 GameWindow::GameWindow() {
     // TODO Auto-generated constructor stub
@@ -52,7 +54,10 @@ void GameWindow::awake(){
     //Golem::Node::Instantiate().lock()->addComponent(compo1);
     Golem::Node::print("ending call to Node::Instantiate()");
 
-    std::shared_ptr<Golem::Component> component = std::dynamic_pointer_cast<Golem::Component>(std::make_shared<Golem::Transform>());
+    std::shared_ptr<Golem::Component> component = Golem::ComponentTypeHolder::getComponent("Transform")->createNewShared();
+    Golem::Debug::log(component->objclassname());
+    if(!component) exit(-2);
+
     n.lock()->addComponent(component);
 
     std::shared_ptr<Golem::Component> c = std::dynamic_pointer_cast<Golem::Component>(std::make_shared<Golem::CameraScript>());

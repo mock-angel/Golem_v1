@@ -25,6 +25,7 @@
 namespace Golem {
 
 class ProjectManager;
+class ComponentTypeHolder;
 
 class Game {
     std::shared_ptr<NodeController> m_nodeManager;
@@ -35,6 +36,8 @@ class Game {
     std::shared_ptr<LayerManager> m_layerManager;
     std::shared_ptr<ProjectManager> m_projectManager;
     std::shared_ptr<ResourceManager> m_resourceManager;
+    std::shared_ptr<ComponentTypeHolder> m_componentTypeHolder;
+
     //std::shared_ptr<ScriptingEngine> m_scriptingEngine;
     Camera camera;
 

@@ -12,6 +12,8 @@
 
 #include "Core/GUI/ImGuiLayer.h"
 #include "Core/ProjectManager/ProjectManager.h"
+#include "Components/ComponentTypeHolder.h"
+#include "Res/Scripts/ComponentsAssembly.h"
 
 /*
 #include "NodeController.h"
@@ -53,6 +55,9 @@ Game::Game() {
     m_layerManager =  std::make_shared<LayerManager>();
     m_projectManager = std::make_shared<ProjectManager>();
     m_resourceManager = std::make_shared<ResourceManager>();
+    m_componentTypeHolder = std::make_shared<ComponentTypeHolder>();
+
+    ComponentsAssembly::assemble();
 }
 
 Game::~Game() {

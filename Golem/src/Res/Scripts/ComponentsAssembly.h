@@ -13,7 +13,7 @@ namespace Golem{
 class ComponentsAssembly{
 
 public:
-    void assemble();
+    static void assemble();
 
     ComponentsAssembly();
     virtual ~ComponentsAssembly();
