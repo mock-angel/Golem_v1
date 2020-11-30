@@ -28,7 +28,7 @@ public:
     std::string m_fshaderData;
     std::string m_gshaderData;
 
-    int getShaderId(){
+    inline int getShaderId(){
         return m_shader.getID();
     }
 };

@@ -173,24 +173,16 @@ private:
 
     DirectoryTree m_dirTree;
 
-    void load(const std::string& t_path){
-        std::string localPath  = convertPathToLocal(t_path);
-        //FileUtils::loadFile();
+    void load(const std::string& t_path);
 
-        if(m_resources.find(t_path) == m_resources.end())
-            m_resources[t_path] = std::make_shared<ShaderResource>(t_path);
-    }
-
-    std::string convertPathToLocal(const std::filesystem::path& t_path){
-        std::string relativePath = t_path.lexically_relative(resHostDir);
+    inline std::string convertPathToLocal(const std::filesystem::path& t_path){
+        const std::string& relativePath = t_path.lexically_relative(resHostDir);
 
         //Path is relative to project.
-        if(relativePath[0] == '.')
-            return t_path;
+        if(relativePath[0] == '.') return t_path;
 
         //Path is root directory
-        else if(relativePath.length() == 0)
-            return t_path;
+        else if(relativePath.length() == 0) return t_path;
         else return t_path / relativePath;
     }
     //Check and compare every resource with its filesystem meta and time resource was changed
