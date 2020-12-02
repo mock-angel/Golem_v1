@@ -26,21 +26,7 @@ public:
     EventBus();
     virtual ~EventBus();
 
-    void Publish(Event& t_event){
-
-        m_bufferEventType = t_event.GetEventType();
-
-        if(!isCacheEmpty() && m_bufferEventType == m_cacheEventType)
-            m_callbackListBuffer = m_callbackListCache;
-
-        else if(m_map.find(m_bufferEventType) != m_map.end())
-            m_callbackListBuffer = &m_map[m_bufferEventType];
-
-        updateCache();
-
-        for(std::shared_ptr<IEventCallback>& callback: *m_callbackListBuffer) callback->call(t_event);
-        for(std::shared_ptr<Layer>& layer: m_listeners)  layer->onEvent(t_event);
-    }
+    void Publish(Event& t_event);
     void Subscribe(EventTypeEnum t_event, std::shared_ptr<IEventCallback>& m_dispacher){
         m_map[t_event].push_back(m_dispacher);
         Debug::log("Subscribe " + std::to_string(t_event));

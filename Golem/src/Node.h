@@ -54,11 +54,12 @@ public:
 
     /* Node statics */
     template <typename T>
-        static T* Instantiate(Transform transform);
+        static T* Instantiate(Transform parent);
     template <typename T>
         static T* Instantiate(Vector3 position, Quaternion rotation);
-    static std::weak_ptr<Node>  Instantiate(std::weak_ptr<Node> nodeObject, Vector3 position, Quaternion rotation);
-    static std::weak_ptr<Node>  Instantiate(Vector3 position = Vector3(), Quaternion rotation = Quaternion());
+
+    static std::weak_ptr<Node> Instantiate(std::weak_ptr<Node> nodeObject, Vector3 position, Quaternion rotation);
+    static std::weak_ptr<Node> Instantiate(Vector3 position = Vector3(), Quaternion rotation = Quaternion());
     /* Components */
 
     template <typename T>

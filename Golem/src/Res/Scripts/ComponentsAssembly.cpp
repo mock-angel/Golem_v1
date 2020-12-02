@@ -10,6 +10,7 @@
 
 #include "../../Component.h"
 
+#include "CameraScript.h"
 #include "SpriteScript.h"
 #include "Transform.h"
 
@@ -24,7 +25,7 @@ ComponentsAssembly::~ComponentsAssembly(){
 }
 
 void ComponentsAssembly::assemble(){
-
+    CameraScript::scriptAdder();
     SpriteScript::scriptAdder();
     Transform::scriptAdder();
 
