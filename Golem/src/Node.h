@@ -78,13 +78,15 @@ public:
 
     static void print(std::string _str);
 
+    void AddChild(std::shared_ptr<Node> node);
+    std::vector<std::weak_ptr<Node>> GetAllChild();
 private:
     int m_rid = 0;
 
     Window* m_window;
 
-    std::vector<Node*> m_childNodesVec;
-    std::map<int, Node*> m_childNodesUMap;
+    std::vector<std::weak_ptr<Node>> m_childNodesVec;
+    //std::map<int, Node*> m_childNodesUMap;
 
     std::vector<std::weak_ptr<Component>> m_nodeComponents;
 

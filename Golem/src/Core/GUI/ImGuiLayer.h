@@ -40,6 +40,8 @@ public:
 
 private:
     std::list<std::shared_ptr<ImGuiWindow>> m_imGuiWindows;
+
+    void SetDarkThemeColors();
 };
 
 } /* namespace Golem */

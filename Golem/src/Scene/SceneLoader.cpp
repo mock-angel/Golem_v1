@@ -25,47 +25,50 @@ SceneLoader::~SceneLoader() {
     // TODO Auto-generated destructor stub
 }
 
-void SceneLoader::loadScene(const std::string& path){
-    Debug::log("Trace 0");
+std::shared_ptr<Node> SceneLoader::loadScene(const std::string& path){
+
     std::vector<YAML::Node> first = YAML::LoadAllFromFile(path);
-
     YAML::Node yamlNode = first[0];
-    Debug::log("Trace 0.1");
-    std::list<long> nodesYaml;
-    std::list<long> componentsYaml;
-    Debug::log("Trace 0.2");
-    std::unordered_map<long, std::shared_ptr<Node>> mpNodes;
-    std::unordered_map<long, std::shared_ptr<Component>> mpComponents;
-    std::shared_ptr<Component> t;
-    std::shared_ptr<Node> n;
-    Debug::log("Trace 1");
-    nodesYaml = yamlNode["m_NodesList"].as<std::list<long>>();
-    componentsYaml = yamlNode["m_ComponentsList"].as<std::list<long>>();
-    Debug::log("Trace 2");
-    for(long compoYaml : componentsYaml){
 
+    std::list<long> nodesFileId;
+    std::list<long> componentsFileId;
+
+    std::unordered_map<long, std::shared_ptr<Node>> nodesMap;
+    std::unordered_map<long, std::shared_ptr<Component>> componentsMap;
+
+    nodesFileId = yamlNode["m_NodesList"].as<std::list<long>>();
+    componentsFileId = yamlNode["m_ComponentsList"].as<std::list<long>>();
+
+    for(long compoYaml : componentsFileId){
+        std::shared_ptr<Component> createdComponent;
         YAML::Node compoNode = yamlNode[compoYaml];
 
         std::string compoType = compoNode["m_ComponentType"].as<std::string>();
         //std::string compoType = compoNode["m_ComponentType"].as<std::string>();
-        t = ComponentTypeHolder::getComponent(compoType);
-        mpComponents[compoYaml] = t;
+        createdComponent = ComponentTypeHolder::getComponent(compoType);
+        componentsMap[compoYaml] = createdComponent;
     }
-    Debug::log("Trace 3");
-    for(long nodeYaml : nodesYaml){
+
+    std::shared_ptr<Node> sceneNode = Node::Instantiate().lock();
+
+    for(long nodeYaml : nodesFileId){
+        std::shared_ptr<Node> createdNode;
+
         YAML::Node compoNode = yamlNode[nodeYaml];
-
         std::list<long> compos = compoNode["m_Components"].as<std::list<long>>();
-        //std::string compoType = compoNode["m_ComponentType"].as<std::string>();
-        n = Node::Instantiate().lock();
-        mpNodes[nodeYaml] = n;
 
-        for(auto& compoNum: compos){
-            std::weak_ptr<Component> g = mpComponents[compoNum];
-            n->addComponent(g);
+        createdNode = Node::Instantiate().lock();
+        nodesMap[nodeYaml] = createdNode;
+
+        for(long compoNum: compos){
+            std::weak_ptr<Component> componentToAdd = componentsMap[compoNum];
+            createdNode->addComponent(componentToAdd);
         }
+
+        sceneNode->AddChild(createdNode);
     }
-    Debug::log("Trace 4");
+
+    return sceneNode;
 }
 
 } /* namespace Golem */

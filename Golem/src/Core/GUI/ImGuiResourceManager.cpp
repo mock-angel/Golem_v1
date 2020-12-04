@@ -11,7 +11,6 @@
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
 #include "Debug.h"
-
 #include "../Resource/ResourceManager.h"
 #include "../Resource/DirectoryTree.h"
 
@@ -27,53 +26,26 @@ ImGuiResourceManager::~ImGuiResourceManager() {
     // TODO Auto-generated destructor stub
 }
 
-void createTree(const std::string& parent, const std::string& directory, const std::string& substitute = ""){
-
-    std::list<std::string> _folders = ResourceManager::getInstance()->getFoldersInPath(directory);
-    std::list<std::string> _files = ResourceManager::getInstance()->getFilesInPath(directory);
-
-    std::filesystem::path f = directory;
-
-    //if(substitute);
-
-    bool treeNodeOpened;
-
-    if(!substitute.length()) treeNodeOpened = ImGui::TreeNode(f.lexically_relative(parent).c_str());
-    else treeNodeOpened = ImGui::TreeNode(substitute.c_str());
-
-    if(treeNodeOpened){
-
-        for(const auto& folder: _folders)
-
-            createTree(directory, folder);
-
-        ImVec2 v2 = ImVec2(ImGui::GetContentRegionAvailWidth(), 0);
-        for(const auto& file: _files){
-            f = file;
-            ImGui::Button(f.lexically_relative(parent).c_str(), v2);
-        }
-        ImGui::TreePop();
-    }
-}
-
 void drawGuiDirTree(DirectoryTree& tree){
-    bool treeNodeOpened = false;
+
+    //TODO:: ResourceManager must be informed of selected Resource.
+    ResourceManager* resManager = ResourceManager::getInstance();
+    //resManager->SetResourceSelected();
 
     //if(!substitute.length()) treeNodeOpened = ImGui::TreeNode(f.lexically_relative(parent).c_str());
-    treeNodeOpened = ImGui::TreeNode(tree.getPath().c_str());
+    if(ImGui::TreeNode(tree.getPath().c_str())){
+        std::list<DirectoryTree>& treeList = tree.getDirectories();
+        for(DirectoryTree& tree_dir: treeList)
+            drawGuiDirTree(tree_dir);
 
-    if(treeNodeOpened){
-        auto& treeList = tree.getDirectories();
-        for(auto& tree_dir: treeList) drawGuiDirTree(tree_dir);
+        //ImVec2 fullWidthSize = ImVec2(ImGui::GetContentRegionAvailWidth(), 0);
+        std::list<DirectoryFile>& fileList = tree.getFiles();
+        for(DirectoryFile& file: fileList){
 
-        ImVec2 fullWidthSize = ImVec2(ImGui::GetContentRegionAvailWidth(), 0);
-        auto& fileList = tree.getFiles();
-        for(const auto& file: fileList){
-            ImGui::Button(file.c_str(), fullWidthSize);
+            ImGui::Selectable(file.getPath().c_str(), &file.m_selected);
             if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(0))
             {
-                // Do stuff on Selectable() double click.
-                Debug::log("Double Click on : ", file.c_str());
+                Debug::log("Double Click on : ", file.getPath().c_str());
             }
         }
         ImGui::TreePop();
@@ -86,12 +58,13 @@ void ImGuiResourceManager::update(){
     ResourceManager* resManager = ResourceManager::getInstance();
 
     std::string resPathParent = resManager->getProjectPath();
-    if(!resPathParent.length()) return;
+    if(resPathParent.length() > 0){
+        ImGui::Begin("ImGuiResourceManager", NULL, ImGuiWindowFlags_NoCollapse|ImGuiWindowFlags_NoScrollbar);
 
-    ImGui::Begin("Resource Manager");
-    //createTree(resPathParent, resPathParent, "Res::/");
-    drawGuiDirTree(resManager->getDirectoryTree());
-    ImGui::End();
+        drawGuiDirTree(resManager->getDirectoryTree());
+
+        ImGui::End();
+    }
 }
 
 } /* namespace Golem */

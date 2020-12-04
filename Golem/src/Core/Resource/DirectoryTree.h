@@ -15,6 +15,30 @@
 
 namespace Golem {
 
+class DirectoryFile{
+public:
+
+    DirectoryFile(const std::filesystem::path& t_path){
+        m_path = t_path;
+    }
+    DirectoryFile() = default;
+
+    inline std::filesystem::path getPath(){
+        return m_path;
+    }
+    inline bool isSelected(){
+        return m_selected;
+    }
+    inline void select(bool value){
+        m_selected = value;
+    }
+    friend class ImGuiResourceManager;
+    bool m_selected = false;
+private:
+    std::filesystem::path m_path;
+
+};
+
 class DirectoryTree {
 public:
     DirectoryTree(const std::filesystem::path& t_path);
@@ -23,19 +47,19 @@ public:
 
     void setPath(const std::filesystem::path& t_path);
     void setPath(const std::string& t_pathString);
-    std::filesystem::path getPath(){
+    inline std::filesystem::path getPath(){
         return m_path;
     }
     void scan();
     std::list<DirectoryTree>& getDirectories();
-    std::list<std::filesystem::path>& getFiles();
+    std::list<DirectoryFile>& getFiles();
     operator std::basic_string<char>() const { return m_path; }
 private:
 
     std::filesystem::path m_path;
 
     std::list<DirectoryTree> m_directories;
-    std::list<std::filesystem::path> m_files;
+    std::list<DirectoryFile> m_files;
 
 
 };

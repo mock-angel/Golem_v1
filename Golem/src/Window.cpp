@@ -100,7 +100,10 @@ void Window::GameLoop() {
 
             //Gui::RenderGUI();
             ImGui::Render();
-
+            //SDL_GL_MakeCurrent(this->m_sdlWindow, this->m_context);
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            SDL_GL_MakeCurrent(this->m_sdlWindow, this->m_context);
             if(m_shown and !m_minimized){
                 render_sequence();
                 ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -141,7 +144,7 @@ void Window::Init(){
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
     m_context = SDL_GL_CreateContext(m_sdlWindow);
-    SDL_GL_SetSwapInterval(0);
+    SDL_GL_SetSwapInterval(1);
 
     //self.glSetViewport()
 

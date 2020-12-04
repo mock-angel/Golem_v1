@@ -22,7 +22,7 @@ std::list<DirectoryTree>& DirectoryTree::getDirectories(){
     return m_directories;
 }
 
-std::list<std::filesystem::path>& DirectoryTree::getFiles(){
+std::list<DirectoryFile>& DirectoryTree::getFiles(){
     return m_files;
 }
 
@@ -42,7 +42,7 @@ void DirectoryTree::scan(){
         if(std::filesystem::is_directory(path))
             m_directories.push_back(DirectoryTree(path));
         else
-            m_files.push_back(path);
+            m_files.push_back(DirectoryFile(path));
     }
 
     for(auto & directoryTree : m_directories)

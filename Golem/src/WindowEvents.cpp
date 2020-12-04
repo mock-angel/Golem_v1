@@ -21,9 +21,15 @@ void WindowEvents::processEvents(){
 
     while (SDL_PollEvent(&e) != 0){
 
-        if( e.type == SDL_WINDOWEVENT )
+        if( e.type == SDL_WINDOWEVENT ){
             handleWindowEvent(e);
 
+            //FIXME: This should prolly not be here.
+            if(e.window.event == SDL_WINDOWEVENT_SIZE_CHANGED){
+                ImGuiIO& io = ImGui::GetIO();
+                io.DisplaySize = ImVec2(e.window.data1, e.window.data1);
+            }
+        }
         ImGui_ImplSDL2_ProcessEvent(&e);
         inputSystem->handleRawInput(e);
     }

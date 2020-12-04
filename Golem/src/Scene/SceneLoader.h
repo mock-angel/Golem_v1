@@ -9,15 +9,18 @@
 #define SCENE_SCENELOADER_H_
 
 #include <string>
+#include <memory>
 
 namespace Golem {
+
+class Node;
 
 class SceneLoader {
 public:
     SceneLoader();
     ~SceneLoader();
 
-    void loadScene(const std::string& path);
+    std::shared_ptr<Node> loadScene(const std::string& path);
 };
 
 } /* namespace Golem */
