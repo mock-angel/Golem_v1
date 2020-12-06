@@ -11,6 +11,7 @@
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
 #include "Debug.h"
+#include "Scene/SceneManager.h"
 
 namespace Golem {
 
@@ -24,13 +25,10 @@ GUIEditorNodeInspector::~GUIEditorNodeInspector() {
 }
 
 void GUIEditorNodeInspector::update(){
-
-
     ImGui::Begin("Node Inspector");
 
-
-
     ImGui::End();
+
 }
 
 } /* namespace Golem */

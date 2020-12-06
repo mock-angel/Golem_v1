@@ -57,9 +57,10 @@ std::shared_ptr<Node> SceneLoader::loadScene(const std::string& path){
         YAML::Node compoNode = yamlNode[nodeYaml];
         std::list<long> compos = compoNode["m_Components"].as<std::list<long>>();
 
+
         createdNode = Node::Instantiate().lock();
         nodesMap[nodeYaml] = createdNode;
-
+        createdNode->SetName(yamlNode[nodeYaml]["m_Name"].as<std::string>());
         for(long compoNum: compos){
             std::weak_ptr<Component> componentToAdd = componentsMap[compoNum];
             createdNode->addComponent(componentToAdd);

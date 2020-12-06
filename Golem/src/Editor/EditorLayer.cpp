@@ -48,6 +48,10 @@ void EditorLayer::update(){
     ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+    //All window color changes.
+
+
     docker_window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
     docker_window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 
@@ -57,6 +61,7 @@ void EditorLayer::update(){
 
     ImGui::Begin("Editor DockSpace", &m_isOpen, docker_window_flags);
     ImGui::PopStyleVar(3);
+
 
     ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
     ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
@@ -69,6 +74,9 @@ void EditorLayer::update(){
 
     m_resourceManagerGUI->update();
     m_guiNodeInspector->update();
+    m_guiHeirarchy->update();
+
+    //ImGui::PopStyleColor(3);
 }
 
 

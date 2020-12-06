@@ -80,7 +80,17 @@ public:
 
     void AddChild(std::shared_ptr<Node> node);
     std::vector<std::weak_ptr<Node>> GetAllChild();
+
+    bool m_isSelected = false;
+
+    inline void SetName(const std::string& t_name){
+        m_name = t_name;
+    }
+    inline const std::string& GetName(){
+        return m_name;
+    }
 private:
+    std::string m_name = "NOT NAMED";
     int m_rid = 0;
 
     Window* m_window;
