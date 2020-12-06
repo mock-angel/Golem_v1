@@ -1,0 +1,101 @@
+%YAML 1.1
+--- !u!1 &5467899953844340395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5467899953844340397}
+  - component: {fileID: 3313361372710811651}
+  - component: {fileID: 8659385287434869663}
+  - component: {fileID: 4636880236813291399}
+  m_Layer: 0
+  m_Name: photonGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- 
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5467899953844340395}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- 
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5467899953844340395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88976217fff0333d5a176225688d7524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrainList: []
+  platformsList: []
+  objectPooler: {fileID: 4636880236813291399}
+  PlatformStr: Platforms
+  TriangleSetStr: TriangleSet
+  gameStarted: 0
+--- 
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5467899953844340395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 3313361372710811651}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &4636880236813291399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5467899953844340395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85fbdfd5a3d682bf8b6a2ca7ed9cdb7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SendBehindCam: 1
+  spawnCacheAtCentralRef: 1
+  isSceneObjects: 0
+  spwanPointXY: {x: -1000000, y: -1000000}
+  masterControlled: 1
+  useAsSingleton: 1
+  pools:
+  - tag: Platforms
+    prefab: {fileID: 7569788434356178778, guid: e212cc421977da08e983dc6dad184ea8,
+      type: 3}
+    size: 6
+  - tag: TriangleSet
+    prefab: {fileID: 9035475045637600660, guid: 84314cad04622190e985553fe32ea928,
+      type: 3}
+    size: 10
