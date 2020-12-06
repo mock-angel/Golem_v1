@@ -10,6 +10,7 @@
 #include <iostream>
 #include <memory>
 
+#include "Debug.h"
 #include "Node.h"
 #include "Component.h"
 #include "Core/Math/Vector2.h"
@@ -18,6 +19,7 @@
 #include "Res/Scripts/Transform.h"
 #include "Res/Scripts/CameraScript.h"
 #include "imgui.h"
+#include "Components/ComponentTypeHolder.h"
 
 GameWindow::GameWindow() {
     // TODO Auto-generated constructor stub
@@ -36,27 +38,21 @@ GameWindow::~GameWindow() {
 void GameWindow::awake(){
     std::cout << "GameWindow::awake executing"<<std::endl;
 
-    //std::string vshader = "src/testVShader";
-    //std::string fshader = "src/testFShader";
 
-    //Golem::Shader shader = Golem::Shader(vshader, fshader);
-
-
-
-    auto compo = (std::make_shared<Golem::SpriteScript>());
-    //auto compo1 = std::make_shared<Golem::SpriteScript>();
     //compo->setShader(shader);
     Golem::Node::print("starting call to Node::Instantiate()");
     auto n = Golem::Node::Instantiate();
-    n.lock()->addComponent(compo);
+
+    //auto compo = (std::make_shared<Golem::SpriteScript>());
+    //n.lock()->addComponent(compo);
     //Golem::Node::Instantiate().lock()->addComponent(compo1);
     Golem::Node::print("ending call to Node::Instantiate()");
 
-    std::shared_ptr<Golem::Component> component = std::dynamic_pointer_cast<Golem::Component>(std::make_shared<Golem::Transform>());
-    n.lock()->addComponent(component);
+    std::shared_ptr<Golem::Component> transformCompo = Golem::ComponentTypeHolder::getComponent("Transform")->createNewShared();
+    n.lock()->addComponent(transformCompo);
 
-    std::shared_ptr<Golem::Component> c = std::dynamic_pointer_cast<Golem::Component>(std::make_shared<Golem::CameraScript>());
-    n.lock()->addComponent(c);
+    std::shared_ptr<Golem::Component> cameraCompo = std::dynamic_pointer_cast<Golem::Component>(std::make_shared<Golem::CameraScript>());
+    n.lock()->addComponent(cameraCompo);
 }
 
 void GameWindow::render(){

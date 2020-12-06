@@ -29,8 +29,8 @@ public:
     void setGLViewport();
 
 protected:
-    int m_width = 480;
-    int m_height = 480;
+    int m_width = 720;
+    int m_height = 720;
 
     virtual std::shared_ptr<Game> getGame() = 0;//getNodeHandler() = 0;
 };

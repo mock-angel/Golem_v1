@@ -54,11 +54,12 @@ public:
 
     /* Node statics */
     template <typename T>
-        static T* Instantiate(Transform transform);
+        static T* Instantiate(Transform parent);
     template <typename T>
         static T* Instantiate(Vector3 position, Quaternion rotation);
-    static std::weak_ptr<Node>  Instantiate(std::weak_ptr<Node> nodeObject, Vector3 position, Quaternion rotation);
-    static std::weak_ptr<Node>  Instantiate(Vector3 position = Vector3(), Quaternion rotation = Quaternion());
+
+    static std::weak_ptr<Node> Instantiate(std::weak_ptr<Node> nodeObject, Vector3 position, Quaternion rotation);
+    static std::weak_ptr<Node> Instantiate(Vector3 position = Vector3(), Quaternion rotation = Quaternion());
     /* Components */
 
     template <typename T>
@@ -77,13 +78,15 @@ public:
 
     static void print(std::string _str);
 
+    void AddChild(std::shared_ptr<Node> node);
+    std::vector<std::weak_ptr<Node>> GetAllChild();
 private:
     int m_rid = 0;
 
     Window* m_window;
 
-    std::vector<Node*> m_childNodesVec;
-    std::map<int, Node*> m_childNodesUMap;
+    std::vector<std::weak_ptr<Node>> m_childNodesVec;
+    //std::map<int, Node*> m_childNodesUMap;
 
     std::vector<std::weak_ptr<Component>> m_nodeComponents;
 

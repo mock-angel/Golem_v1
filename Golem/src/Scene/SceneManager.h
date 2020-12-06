@@ -20,7 +20,12 @@ public:
         return m_Instance;
     }
 
-    std::shared_ptr<Scene> m_currentScene = nullptr;
+    //TODO:: Make it possible to load scenes by passing in nodes.
+    static void Load(const std::string& t_scene);
+
+    static std::shared_ptr<Node> GetCurrentScene();
+
+    std::shared_ptr<Node> m_currentScene = nullptr;
 
     SceneManager();
     ~SceneManager();

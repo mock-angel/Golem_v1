@@ -17,6 +17,7 @@
 #include "yaml-cpp/yaml.h"
 #include "Debug.h"
 #include "../Resource/ResourceManager.h"
+#include "Scene/SceneManager.h"
 
 namespace Golem {
 
@@ -105,6 +106,7 @@ void ProjectManager::openProject(const ProjectData& projData){
     openedProject = projData;
     m_projectOpened = true;
     ResourceManager::getInstance()->setProject(openedProject);
+    SceneManager::Load("/home/anantha/Desktop/GitHub/Golem/Golem/test_proj/Res/Scenes/test.scene");
 }
 
 ProjectManager* ProjectManager::getInstance(){

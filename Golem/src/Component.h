@@ -24,6 +24,16 @@ namespace Golem {
         ComponentTypeHolder::addScript<ClassName>();\
     }
 
+#define DEFINE_CLASS_NAME( className ) \
+    static std::string classname()  \
+    { \
+         return #className; \
+    }\
+    virtual std::string objclassname()  \
+    { \
+         return #className; \
+    }
+
 #define GAME_SCRIPT(ClassName) \
     public: ClassName(); \
     \
@@ -33,6 +43,10 @@ namespace Golem {
         static ClassName constructNew(){\
             return ClassName();\
         }\
+        virtual std::shared_ptr<Component> createNewShared() override{\
+            return std::dynamic_pointer_cast<Component>(std::make_shared<ClassName>());\
+        }\
+        DEFINE_CLASS_NAME(ClassName)\
     private: \
         STATIC_SCRIPT_ADDER_FUNCTION(ClassName) \
         friend class ComponentsAssembly;
@@ -64,6 +78,14 @@ public:
     virtual void render() override;//TODO: Test if this override will cause any problem.
     virtual void update() ;
 
+    virtual std::string objclassname()  \
+    {
+         return "Component";
+    }
+
+    virtual std::shared_ptr<Component> createNewShared(){
+        return nullptr;
+    }
     Component();
     virtual ~Component();
 };

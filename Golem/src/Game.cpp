@@ -12,6 +12,10 @@
 
 #include "Core/GUI/ImGuiLayer.h"
 #include "Core/ProjectManager/ProjectManager.h"
+#include "Components/ComponentTypeHolder.h"
+#include "Res/Scripts/ComponentsAssembly.h"
+#include "Editor/EditorLayer.h"
+#include "Scene/SceneManager.h"
 
 /*
 #include "NodeController.h"
@@ -53,6 +57,9 @@ Game::Game() {
     m_layerManager =  std::make_shared<LayerManager>();
     m_projectManager = std::make_shared<ProjectManager>();
     m_resourceManager = std::make_shared<ResourceManager>();
+    m_componentTypeHolder = std::make_shared<ComponentTypeHolder>();
+    m_sceneManager =  std::make_shared<SceneManager>();
+    ComponentsAssembly::assemble();
 }
 
 Game::~Game() {
@@ -74,8 +81,6 @@ void Game::update() {
 void Game::start() {
     std::shared_ptr<ImGuiLayer> imgui_layer = std::make_shared<ImGuiLayer>();
     m_layerManager->attachLayer(imgui_layer);
-
-    //m_scriptingEngine = std::make_shared<ScriptingEngine>();
 }
 
 void Game::render() {

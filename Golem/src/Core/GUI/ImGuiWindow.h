@@ -23,7 +23,7 @@ public:
     bool isOpen(){
         return m_opened;
     }
-private:
+protected:
     bool m_opened = false;
 };
 

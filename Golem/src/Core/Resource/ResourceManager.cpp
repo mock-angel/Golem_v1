@@ -63,4 +63,18 @@ ResourceRef ResourceManager::getResource(const std::string& resPath){
     return nullptr;
 }
 
+void ResourceManager::load(const std::string& t_path){
+    std::string localPath  = convertPathToLocal(t_path);
+    //FileUtils::loadFile();
+    std::filesystem::path p = t_path;
+
+    //TODO: Pass extension to functon and determine file type.
+    if(m_resources.find(t_path) == m_resources.end()){
+        if(p.extension() == ".shader")
+            m_resources[t_path] = std::make_shared<ShaderResource>(t_path);
+        if(p.extension() == ".png")
+            ;
+    }
+}
+
 } /* namespace Golem */

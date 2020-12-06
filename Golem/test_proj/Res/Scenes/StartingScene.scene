@@ -1,0 +1,13 @@
+m_gameObjects:
+ - 100
+ - 101
+m_components:
+ - 455
+ - 456
+ - 457
+100:
+ m_components:
+   
+455:
+ name: Transform
+ 

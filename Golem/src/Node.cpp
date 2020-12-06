@@ -80,6 +80,15 @@ void Node::RemoveChild(Node* t_child){
         m_childNodesUMap.erase(t_rid);
 }*/
 
+void Node::AddChild(std::shared_ptr<Node> node){
+    m_childNodesVec.push_back(node);
+    //node->
+}
+
+std::vector<std::weak_ptr<Node>> Node::GetAllChild(){
+    return m_childNodesVec;
+}
+
 //User Functions
 void Node::Awake(){
     print("Node::Awake() called");
