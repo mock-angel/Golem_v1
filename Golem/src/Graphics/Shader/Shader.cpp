@@ -113,6 +113,8 @@ unsigned int Shader::loadShaderFromData(const std::string& shaderCode, GLenum sh
 
     const char* cShaderCode = shaderCode.c_str();
     //shader creation.
+    std::cout<<shaderCode<<std::endl;
+
     unsigned int shader = glCreateShader(shaderType);
     glShaderSource(shader, 1, &cShaderCode, NULL);
     glCompileShader(shader);

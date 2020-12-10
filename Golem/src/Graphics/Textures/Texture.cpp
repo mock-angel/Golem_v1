@@ -15,6 +15,7 @@
 
 #include "SOIL/SOIL.h"
 #include "../../Debug.h"
+#include "vendor/stb/stb_image.h"
 
 
 namespace Golem {
@@ -41,7 +42,9 @@ void Texture::load(const char* path ){
     // set the texture wrapping parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);   // set texture wrapping to GL_REPEAT (default wrapping method)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    //stbi_set_flip_vertically_on_load(true);
+    //stbi_convert_iphone_png_to_rgb(1);
+    //stbi__vertically_flip_on_load_global = true;
+    //stbi_set_flip_vertically_on_load(1);
     // set texture filtering parameters
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -68,6 +71,25 @@ void Texture::load(const char* path ){
 
     SOIL_free_image_data(image);
     //stbi_image_free(data);
+}
+
+void Texture::create(int width, int height){
+
+    glGenTextures(1, &m_texture);
+
+
+    this->bind();
+
+    // Give an empty image to OpenGL ( the last "0" )
+    glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, 1024, 768, 0,GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+    // Poor filtering. Needed !
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+}
+
+void Texture::bind(){
+    glBindTexture(GL_TEXTURE_2D, m_texture);
 }
 
 } /* namespace Golem */

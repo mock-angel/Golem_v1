@@ -20,9 +20,7 @@ public:
     virtual void close(){ m_opened = false;}
     virtual void open(){ m_opened = true;}
 
-    bool isOpen(){
-        return m_opened;
-    }
+    inline bool isOpen(){ return m_opened; }
 protected:
     bool m_opened = false;
 };

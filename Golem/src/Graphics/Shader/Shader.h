@@ -38,7 +38,7 @@ public:
 
     virtual bool onLoad();
 
-    unsigned int getID() const {return ID;}
+    inline unsigned int getID() const { return ID; }
 
     unsigned int loadShaderFromFile(const char*  shaderPath, GLenum shaderType);
     unsigned int loadShaderFromData(const std::string& shaderCode, GLenum shaderType);

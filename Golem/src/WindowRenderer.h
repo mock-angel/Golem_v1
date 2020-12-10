@@ -33,6 +33,7 @@ protected:
     int m_height = 720;
 
     virtual std::shared_ptr<Game> getGame() = 0;//getNodeHandler() = 0;
+
 };
 
 } /* namespace Golem */

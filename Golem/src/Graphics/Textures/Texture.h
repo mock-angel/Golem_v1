@@ -19,10 +19,13 @@ public:
     virtual ~Texture();
 
     void load(const char* str );
+    void create(int width, int height);
 
-    unsigned int get(){
+    inline unsigned int get(){
         return m_texture;
     }
+
+    void bind();
 private:
     unsigned int m_texture;
 };

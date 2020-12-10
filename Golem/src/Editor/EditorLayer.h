@@ -18,6 +18,10 @@ class ImGuiResourceManager;
 class GuiNodeHeirarchy;
 class GUIEditorNodeInspector;
 
+class DebugGUI;
+class ImGuiGame;
+class ImGuiScene;
+
 class EditorLayer: public ImGuiWindow {
 public:
     EditorLayer();
@@ -27,8 +31,12 @@ public:
 
 private:
     std::shared_ptr<ImGuiResourceManager> m_resourceManagerGUI;
-    std::shared_ptr<GuiNodeHeirarchy> m_guiHeirarchy;
-    std::shared_ptr<GUIEditorNodeInspector> m_guiNodeInspector;
+    std::shared_ptr<GuiNodeHeirarchy> m_heirarchyGUI;
+    std::shared_ptr<GUIEditorNodeInspector> m_nodeInspectorGUI;
+
+    std::shared_ptr<DebugGUI> m_editorDebugGUI;
+    std::shared_ptr<ImGuiGame> m_editorGameWindowGUI;
+    std::shared_ptr<ImGuiScene> m_editorSceneWindowGUI;
 
     void SetDarkThemeColors();
 

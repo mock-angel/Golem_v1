@@ -19,8 +19,11 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
+#include "Graphics/BatchRenderer.h"
 
 namespace Golem {
+
+Batch* batch = nullptr;
 
 WindowRenderer::~WindowRenderer(){
 
@@ -28,13 +31,16 @@ WindowRenderer::~WindowRenderer(){
 
 void WindowRenderer::render_sequence(){
 
-
-    glClearColor(0.2, 0.3, 0.3, 1.0);
+    if(batch == nullptr) batch = new Batch();
+    //glClearColor(0.2, 0.3, 0.3, 1.0);
+    glClearColor(.3, .1, .2, 1.0);
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     //std::cout<<m_width;
 
     //getNodeHandler()->RenderNodes();
     getGame()->render();
+
+    batch->Render();
 
     render();
 }
