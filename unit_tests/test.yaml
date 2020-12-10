@@ -1,0 +1,26 @@
+m_NodesList:
+  - 2001  #Sprite
+  - 2002  #Camera
+m_ComponentsList:
+  - 4001  #Sprite Transform
+  - 4002  #Sprite Component
+  - 4003  #Camera Transform
+  - 4004  #Camera Component
+2001:
+  m_Name : Sprite Object
+  m_Components:
+    - 4001
+    - 4002
+2002:
+  m_Name: Camera Object
+  m_Components:
+    - 4003
+    - 4004
+4001:
+  m_ComponentType: Transform
+4002:
+  m_ComponentType: SpriteScript
+4003:
+  m_ComponentType: Transform
+4004:
+  m_ComponentType: CameraScript

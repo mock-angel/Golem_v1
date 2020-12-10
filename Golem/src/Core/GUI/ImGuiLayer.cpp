@@ -96,6 +96,14 @@ void ImGuiLayer::SetDarkThemeColors()
     colors[ImGuiCol_TitleBg] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
     colors[ImGuiCol_TitleBgActive] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
     colors[ImGuiCol_TitleBgCollapsed] = ImVec4{ 0.15f, 0.1505f, 0.151f, 1.0f };
+
+    //My Custom Header Mods.
+    colors[ImGuiCol_Header] = ImVec4{ 68/255.f, 68/255.f, 68/255.f, 1.0f };
+    colors[ImGuiCol_HeaderHovered] = ImVec4{ 78/255.f, 78/255.f, 79/255.f, 1.0f };
+    colors[ImGuiCol_HeaderActive] = ImVec4{ 68/255.f, 68/255.f, 69/255.f, 1.0f };
+    //ImGui::PushStyleColor(ImGuiCol_Header, {68, 68, 69, 255});
+    //ImGui::PushStyleColor(ImGuiCol_HeaderHovered, {78, 78, 79, 185});
+    //ImGui::PushStyleColor(ImGuiCol_HeaderActive, {68, 68, 69, 255});
 }
 
 } /* namespace Golem */
