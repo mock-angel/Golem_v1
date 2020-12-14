@@ -40,7 +40,7 @@ class Game {
     std::shared_ptr<ComponentTypeHolder> m_componentTypeHolder;
     std::shared_ptr<SceneManager> m_sceneManager;
     //std::shared_ptr<ScriptingEngine> m_scriptingEngine;
-    Camera camera;
+    std::shared_ptr<Camera> camera;
 
 public:
     Game();
@@ -52,29 +52,27 @@ public:
     void onEvent(Event& t_event);
 
     void start();
-    Camera getConatinedCamera(){
-        return camera;
-    }
+    inline std::shared_ptr<Camera> getConatinedCamera(){ return camera; }
 
     static std::weak_ptr<Window> m_window;
-    static std::weak_ptr<Window> getWindow(){return m_window;}
-    static std::weak_ptr<Game> getGame(){return m_window.lock()->getGame();}
-    static Camera getCamera(){return m_window.lock()->getGame()->getConatinedCamera();}
+    static std::weak_ptr<Window> getWindow(){ return m_window; }
+    static std::weak_ptr<Game> getGame(){ return m_window.lock()->getGame(); }
+    static std::shared_ptr<Camera> getCamera(){  if(getWindow().lock()->getGame()->getConatinedCamera()) return getWindow().lock()->getGame()->getConatinedCamera(); else exit(9);}
 
     static std::weak_ptr<NodeController> m_nodeControllerStatic;
-    static std::weak_ptr<NodeController> getNodeController(){return m_nodeControllerStatic;}
+    static std::weak_ptr<NodeController> getNodeController(){ return m_nodeControllerStatic; }
 
     static std::weak_ptr<ComponentController> m_componentControllerStatic;
-    static std::weak_ptr<ComponentController> getComponentController(){return m_componentControllerStatic;}
+    static std::weak_ptr<ComponentController> getComponentController(){ return m_componentControllerStatic; }
 
     static std::weak_ptr<ShaderLoader> m_shaderControllerStatic;
-    static std::weak_ptr<ShaderLoader> getShaderController(){return m_shaderControllerStatic;}
+    static std::weak_ptr<ShaderLoader> getShaderController(){ return m_shaderControllerStatic; }
 
     static std::weak_ptr<EventBus> m_eventBusStatic;
-    static std::weak_ptr<EventBus> getEventBus(){return m_eventBusStatic;}
+    static std::weak_ptr<EventBus> getEventBus(){ return m_eventBusStatic; }
 
     static std::weak_ptr<InputSystem> m_inputSystemStatic;
-    static std::weak_ptr<InputSystem> getInputSystem(){return m_inputSystemStatic;}
+    static std::weak_ptr<InputSystem> getInputSystem(){ return m_inputSystemStatic; }
 
     void processEvents();
 };

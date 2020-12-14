@@ -21,6 +21,10 @@ LayerManager::~LayerManager() {
     // TODO Auto-generated destructor stub
 }
 
+void LayerManager::start(){
+
+}
+
 void LayerManager::attachLayer(std::shared_ptr<Layer> t_layer){
 
     m_eventLayers.push_back(t_layer);

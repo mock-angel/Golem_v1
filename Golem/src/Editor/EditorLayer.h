@@ -22,13 +22,16 @@ class DebugGUI;
 class ImGuiGame;
 class ImGuiScene;
 
+class Camera;
+class Event;
+
 class EditorLayer: public ImGuiWindow {
 public:
     EditorLayer();
     ~EditorLayer();
 
     void update();
-
+    void OnEvent(Event& event);
 private:
     std::shared_ptr<ImGuiResourceManager> m_resourceManagerGUI;
     std::shared_ptr<GuiNodeHeirarchy> m_heirarchyGUI;
@@ -38,6 +41,7 @@ private:
     std::shared_ptr<ImGuiGame> m_editorGameWindowGUI;
     std::shared_ptr<ImGuiScene> m_editorSceneWindowGUI;
 
+    std::shared_ptr<Camera> m_editorCamera;
     void SetDarkThemeColors();
 
     bool m_isOpen = true;

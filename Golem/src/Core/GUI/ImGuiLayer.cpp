@@ -14,6 +14,8 @@
 #include "ImGuiResourceManager.h"
 #include "Editor/EditorLayer.h"
 #include "GuiNodeHeirarchy.h"
+#include "Core/Event/EventDispatcher.h"
+#include "Editor/EditorEvent.h"
 
 namespace Golem {
 
@@ -104,6 +106,14 @@ void ImGuiLayer::SetDarkThemeColors()
     //ImGui::PushStyleColor(ImGuiCol_Header, {68, 68, 69, 255});
     //ImGui::PushStyleColor(ImGuiCol_HeaderHovered, {78, 78, 79, 185});
     //ImGui::PushStyleColor(ImGuiCol_HeaderActive, {68, 68, 69, 255});
+}
+
+void ImGuiLayer::onEvent(Event& t_event){
+    EventDispatcher eventDispatcher(t_event);
+    for(auto& window: m_imGuiWindows){
+        std::function<void(Event&)> fun = std::bind(&ImGuiWindow::OnEvent, window.get(), std::placeholders::_1);
+        eventDispatcher.dispatch(fun);
+    }
 }
 
 } /* namespace Golem */

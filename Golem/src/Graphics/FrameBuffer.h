@@ -16,8 +16,10 @@ public:
     ~FrameBuffer();
 
     void create(int width, int height);
+    void resize(int width, int height);
     void bind();
     void unbind();
+    void del();
     unsigned int getTexture(){return m_TextureObject;}//Temp
 private:
     unsigned int m_FBO;

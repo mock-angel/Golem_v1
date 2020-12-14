@@ -26,6 +26,8 @@
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
 
+#include "Graphics/Renderer.h"
+
 using namespace std;
 
 void GLAPIENTRY
@@ -76,6 +78,7 @@ void Window::GameLoop() {
 
     bool show_demo_window = true;
 
+    //m_layerManager->start();//Does nothing for now...
     m_game->start();
 
     while(!m_closed){
@@ -173,7 +176,9 @@ void Window::Init(){
 
     Gui::Init(m_sdlWindow, m_sdlWindow);
 
+    m_renderer = std::make_shared<Renderer>();
     m_game = std::make_shared<Game>();
+    //m_layerManager = std::make_shared<LayerManager>();
 
     show();
 
@@ -304,11 +309,11 @@ void Window::handleWindowEvent( SDL_Event& e )
         case SDL_WINDOWEVENT_CLOSE:
             SDL_HideWindow( m_sdlWindow );
 
-            SDL_DestroyRenderer(m_renderer);
+            SDL_DestroyRenderer(m_sdlRenderer);
             SDL_DestroyWindow(m_sdlWindow);
 
             m_sdlWindow = NULL;
-            m_renderer = NULL;
+            m_sdlRenderer = NULL;
             m_closed = true;
             break;
         }
@@ -358,6 +363,10 @@ int Window::getHeight(){
 
 std::shared_ptr<Game> Window::getGame(){
     return m_game;
+}
+
+std::shared_ptr<Renderer> Window::getRenderer(){
+    return m_renderer;
 }
 
 } /* namespace Golem */

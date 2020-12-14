@@ -10,6 +10,8 @@
 
 namespace Golem {
 
+class Event;
+
 class ImGuiWindow {
 public:
     ImGuiWindow();
@@ -21,6 +23,8 @@ public:
     virtual void open(){ m_opened = true;}
 
     inline bool isOpen(){ return m_opened; }
+
+    virtual void OnEvent(Event& event){ ; }
 protected:
     bool m_opened = false;
 };

@@ -25,6 +25,9 @@ public:
         return m_texture;
     }
 
+    //TODO DEPRECATED:: remove this. IMplemented in Camera
+    inline void setTexture(unsigned int value){ m_texture = value; }
+
     void bind();
 private:
     unsigned int m_texture;

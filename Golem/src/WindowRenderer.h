@@ -13,6 +13,7 @@
 #include <memory>
 
 #include "NodeController.h"
+#include "Graphics/Renderer.h"
 
 namespace Golem {
 
@@ -28,11 +29,13 @@ public:
 
     void setGLViewport();
 
+
 protected:
     int m_width = 720;
     int m_height = 720;
 
     virtual std::shared_ptr<Game> getGame() = 0;//getNodeHandler() = 0;
+    virtual std::shared_ptr<Renderer> getRenderer() = 0;//getNodeHandler() = 0;
 
 };
 

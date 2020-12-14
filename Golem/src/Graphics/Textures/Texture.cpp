@@ -76,9 +76,7 @@ void Texture::load(const char* path ){
 void Texture::create(int width, int height){
 
     glGenTextures(1, &m_texture);
-
-
-    this->bind();
+    glBindTexture(GL_TEXTURE_2D, m_texture); // same as:- this->bind();
 
     // Give an empty image to OpenGL ( the last "0" )
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
@@ -89,8 +87,7 @@ void Texture::create(int width, int height){
 }
 
 void Texture::resize(int width, int height){
-    this->bind();
-
+    glBindTexture(GL_TEXTURE_2D, m_texture); // same as:- this->bind();
     glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 }
 

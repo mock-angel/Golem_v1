@@ -16,6 +16,7 @@
 #include "Core/Resource/ResourceManager.h"
 #include "Debug.h"
 #include "Game.h"
+#include "Renderer.h"
 
 namespace Golem {
 
@@ -94,7 +95,9 @@ void Batch::Render(){
     //glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(m_Shader->getShaderId());
 
-    glm::mat4 projView_matrix = Game::getCamera().getClipMatrix();
+    //glm::mat4 projView_matrix = Game::getCamera()->getClipMatrix();
+    glm::mat4 projView_matrix = Camera::getCurrentCamera()->getClipMatrix();
+
     m_Shader->m_shader.setMat4("u_Clip", projView_matrix );
     //m_Shader->m_shader.setIntArray("u_Clip", m_TextureArray.data(), 16 );
 
