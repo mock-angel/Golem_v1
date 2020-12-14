@@ -38,7 +38,7 @@ public:
 
     virtual bool onLoad();
 
-    unsigned int getID() const {return ID;}
+    inline unsigned int getID() const { return ID; }
 
     unsigned int loadShaderFromFile(const char*  shaderPath, GLenum shaderType);
     unsigned int loadShaderFromData(const std::string& shaderCode, GLenum shaderType);
@@ -55,6 +55,7 @@ public:
     void setBool(const std::string &name, bool value) const;
     // ------------------------------------------------------------------------
     void setInt(const std::string &name, int value) const;
+    void setIntArray(const std::string &name, int* value, uint32_t size) const;
     // ------------------------------------------------------------------------
     void setFloat(const std::string &name, float value) const;
     // ------------------------------------------------------------------------

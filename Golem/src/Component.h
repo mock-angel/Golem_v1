@@ -16,7 +16,7 @@
 
 namespace Golem {
 
-#define SCRIPT_HEADERS "../../Components/ComponentTypeHolder.h"
+#define SCRIPT_HEADERS "Components/ComponentTypeHolder.h"
 
 // Defines what the adder script does.
 #define STATIC_SCRIPT_ADDER_FUNCTION(ClassName) \
@@ -86,6 +86,13 @@ public:
     virtual std::shared_ptr<Component> createNewShared(){
         return nullptr;
     }
+
+    /*
+    template<typename T>
+    std::shared_ptr<T> as(){
+        std::dynamic_pointer_cast<Component>();
+    }*/
+
     Component();
     virtual ~Component();
 };

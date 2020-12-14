@@ -19,6 +19,7 @@ void WindowEvents::processEvents(){
 
     std::shared_ptr<InputSystem> inputSystem = Game::getInputSystem().lock();
 
+    inputSystem->prepare();
     while (SDL_PollEvent(&e) != 0){
 
         if( e.type == SDL_WINDOWEVENT ){

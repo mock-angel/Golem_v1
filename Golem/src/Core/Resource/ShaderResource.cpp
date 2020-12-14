@@ -17,6 +17,7 @@
 #include "rapidjson/error/en.h"
 #include "Graphics/Shader/ShaderData.h"
 #include "Utils/FileUtils.h"
+#include "Debug.h"
 
 using namespace nlohmann;
 
@@ -54,6 +55,7 @@ void ShaderResource::onPrepare() {
 }
 
 bool ShaderResource::onLoad() {
+    Debug::log("ShaderResource::onLoad(");
     m_shader = Shader(m_vshaderData.c_str(), m_fshaderData.c_str());
     return true;
 }

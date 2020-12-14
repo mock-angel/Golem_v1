@@ -26,7 +26,24 @@
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
 
+#include "Graphics/Renderer.h"
+
 using namespace std;
+
+void GLAPIENTRY
+MessageCallback( GLenum source,
+                 GLenum type,
+                 GLuint id,
+                 GLenum severity,
+                 GLsizei length,
+                 const GLchar* message,
+                 const void* userParam )
+{
+  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+}
+
 
 namespace Golem {
 
@@ -61,6 +78,7 @@ void Window::GameLoop() {
 
     bool show_demo_window = true;
 
+    //m_layerManager->start();//Does nothing for now...
     m_game->start();
 
     while(!m_closed){
@@ -139,8 +157,8 @@ void Window::Init(){
 
     hide();
     //SDL_HideWindow(m_window);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
     m_context = SDL_GL_CreateContext(m_sdlWindow);
@@ -152,9 +170,15 @@ void Window::Init(){
 
     glewInit();
 
+    // During init, enable debug output
+    glEnable              ( GL_DEBUG_OUTPUT );
+    glDebugMessageCallback( MessageCallback, 0 );
+
     Gui::Init(m_sdlWindow, m_sdlWindow);
 
+    m_renderer = std::make_shared<Renderer>();
     m_game = std::make_shared<Game>();
+    //m_layerManager = std::make_shared<LayerManager>();
 
     show();
 
@@ -285,11 +309,11 @@ void Window::handleWindowEvent( SDL_Event& e )
         case SDL_WINDOWEVENT_CLOSE:
             SDL_HideWindow( m_sdlWindow );
 
-            SDL_DestroyRenderer(m_renderer);
+            SDL_DestroyRenderer(m_sdlRenderer);
             SDL_DestroyWindow(m_sdlWindow);
 
             m_sdlWindow = NULL;
-            m_renderer = NULL;
+            m_sdlRenderer = NULL;
             m_closed = true;
             break;
         }
@@ -339,6 +363,10 @@ int Window::getHeight(){
 
 std::shared_ptr<Game> Window::getGame(){
     return m_game;
+}
+
+std::shared_ptr<Renderer> Window::getRenderer(){
+    return m_renderer;
 }
 
 } /* namespace Golem */

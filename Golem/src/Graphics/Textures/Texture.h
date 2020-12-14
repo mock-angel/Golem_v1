@@ -19,10 +19,16 @@ public:
     virtual ~Texture();
 
     void load(const char* str );
-
-    unsigned int get(){
+    void create(int width, int height);
+    void resize(int width, int height);
+    inline unsigned int get(){
         return m_texture;
     }
+
+    //TODO DEPRECATED:: remove this. IMplemented in Camera
+    inline void setTexture(unsigned int value){ m_texture = value; }
+
+    void bind();
 private:
     unsigned int m_texture;
 };

@@ -25,11 +25,10 @@ public:
 
     std::string VerticalAxis = "Vertical";
     std::string HorizontalAxis = "Horizontal";
-
     std::string Jump = "Jump";
 
     void handleRawInput(SDL_Event& e);
-
+    void prepare();                         // Called before recieving a series of inputs for a frame.
 };
 
 } /* namespace Golem */

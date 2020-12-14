@@ -13,6 +13,7 @@
 #include "CameraScript.h"
 #include "SpriteScript.h"
 #include "Transform.h"
+#include "Editor/EditorCameraScript.h"
 
 namespace Golem{
 
@@ -28,7 +29,7 @@ void ComponentsAssembly::assemble(){
     CameraScript::scriptAdder();
     SpriteScript::scriptAdder();
     Transform::scriptAdder();
-
+    EditorCameraScript::scriptAdder();
 }
 
 } /* namespace Golem */

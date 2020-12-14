@@ -38,6 +38,7 @@ public:
         Gui::RenderGUI();
     }
 
+    void onEvent(Event& t_event);
 private:
     std::list<std::shared_ptr<ImGuiWindow>> m_imGuiWindows;
 

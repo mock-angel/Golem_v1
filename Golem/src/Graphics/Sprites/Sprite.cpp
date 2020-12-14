@@ -18,6 +18,8 @@
 #include "../../Res/Scripts/Transform.h"
 #include "Core/Resource/ResourceManager.h"
 
+#include <glm/gtx/string_cast.hpp>
+
 namespace Golem {
 
 Sprite::Sprite()  : Renderable(){
@@ -76,7 +78,7 @@ Sprite::Sprite()  : Renderable(){
     //t.load("src/ss.png");
     _VAO = VAO;
     glBindVertexArray(0);
-    spriteShader.setInt("texture1", 0);
+    spriteShader.setInt("texture1", t.get());
 }
 
 void Sprite::render(){
@@ -93,7 +95,7 @@ void Sprite::render(){
 
     spriteShader.setVec3("ourColor", Color::white.getVector());
 
-    glm::mat4 projView_matrix = Game::getCamera().getClipMatrix();
+    glm::mat4 projView_matrix = Game::getCamera()->getClipMatrix();
 
     spriteShader.setMat4("clip", projView_matrix);
     //glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -119,9 +121,17 @@ void Sprite::render(std::weak_ptr<Transform> transform){
 
     m_spriteShader->m_shader.setVec3("ourColor", Color::white.getVector());
 
-    glm::mat4 projView_matrix = Game::getCamera().getClipMatrix();
+    glm::mat4 projView_matrix;
+    projView_matrix = Game::getCamera()->getClipMatrix();
 
+    //glm::vec4 test;
+    //glm::to_string(test);
+    //Debug::log(glm::to_string(projView_matrix * transform.lock()->getModelMatrix()));
+    //std::cout<<glm::to_string(projView_matrix * transform.lock()->getModelMatrix())<<std::endl;
     m_spriteShader->m_shader.setMat4("clip", projView_matrix * transform.lock()->getModelMatrix());
+
+    //Debug::log("gamesprite::render", std::to_string( Game::getCamera()->getWidth() ) );
+
     //glDrawArrays(GL_TRIANGLES, 0, 3);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 

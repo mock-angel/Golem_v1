@@ -7,6 +7,8 @@
 
 #include "EditorLayer.h"
 
+#include <type_traits>
+
 #include "../Core/GUI/GuiNodeHeirarchy.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -14,6 +16,15 @@
 #include "Debug.h"
 #include "Core/GUI/ImGuiResourceManager.h"
 #include "Core/GUI/GUIEditorNodeInspector.h"
+#include "Core/Event/Event.h"
+#include "EditorEvent.h"
+
+#include "DebugGUI.h"
+#include "ImGuiGame.h"
+#include "ImGuiScene.h"
+#include "Graphics/Camera/CameraManager.h"
+#include "Core/Event/EventDispatcher.h"
+
 
 namespace Golem {
 
@@ -22,11 +33,28 @@ EditorLayer::EditorLayer() {
     m_resourceManagerGUI = std::make_shared<ImGuiResourceManager>();
     m_resourceManagerGUI->open();
 
-    m_guiHeirarchy = std::make_shared<GuiNodeHeirarchy>();
-    m_guiHeirarchy->open();
+    m_heirarchyGUI = std::make_shared<GuiNodeHeirarchy>();
+    m_heirarchyGUI->open();
 
-    m_guiNodeInspector = std::make_shared<GUIEditorNodeInspector>();
-    m_guiNodeInspector->open();
+    m_nodeInspectorGUI = std::make_shared<GUIEditorNodeInspector>();
+    m_nodeInspectorGUI->open();
+
+
+    m_editorDebugGUI = std::make_shared<DebugGUI>();
+    m_editorDebugGUI->open();
+
+    m_editorGameWindowGUI = std::make_shared<ImGuiGame>();
+    m_editorGameWindowGUI->open();
+
+    m_editorSceneWindowGUI = std::make_shared<ImGuiScene>();
+    m_editorSceneWindowGUI->open();
+
+    //m_editorCamera = CameraManager::CreateEditorCamera();
+
+    /*
+
+*/
+
 }
 
 EditorLayer::~EditorLayer() {
@@ -34,6 +62,7 @@ EditorLayer::~EditorLayer() {
 }
 
 void EditorLayer::update(){
+    //return;
     ImGuiIO& io = ImGui::GetIO();
 
     //Docking Space.
@@ -73,12 +102,28 @@ void EditorLayer::update(){
     */
 
     m_resourceManagerGUI->update();
-    m_guiNodeInspector->update();
-    m_guiHeirarchy->update();
+    m_nodeInspectorGUI->update();
+    m_heirarchyGUI->update();
 
-    //ImGui::PopStyleColor(3);
+    m_editorDebugGUI->update();
+
+    m_editorGameWindowGUI->update();
+    m_editorSceneWindowGUI->update();
+
 }
 
+void EditorLayer::OnEvent(Event& event){
+    //Debug::log("GOt Event!!!!");
+    //Gets events. Creats Editor Events and dispatches them.
+    if(event.GetCategoryFlags() & EditorEventCategory){
+        ;
+    }
 
+    EventDispatcher eventDispatcher(event);
+    std::function<void(Event&)> fun = std::bind(&ImGuiWindow::OnEvent, m_editorSceneWindowGUI.get(), std::placeholders::_1);
+    eventDispatcher.dispatch(fun);
+
+
+}
 
 } /* namespace Golem */

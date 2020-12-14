@@ -14,7 +14,7 @@
 #include "Debug.h"
 #include "Component.h"
 #include SCRIPT_HEADERS
-#include "../../Core/Event/EventCallback.h"
+#include "Core/Event/EventCallback.h"
 
 namespace Golem {
 

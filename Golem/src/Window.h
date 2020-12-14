@@ -14,9 +14,13 @@
 #include "WindowEvents.h"
 #include "WindowRenderer.h"
 
+
+
 namespace Golem {
 
 class Game;
+class Renderer;
+class LayerManager;
 
 class Window: public WindowEvents, public WindowRenderer {
 public:
@@ -66,7 +70,7 @@ public:
     //NodeController* getNodeHandler();//TODO: FIXME: Naming convention is odd.
 
 protected:
-    SDL_Renderer* m_renderer = nullptr;
+    SDL_Renderer* m_sdlRenderer = nullptr;
 
 private:
     //Window data.
@@ -84,7 +88,8 @@ private:
     //Handles window events.
     void handleWindowEvent( SDL_Event& e ) override;
 
-    std::shared_ptr<Game> getGame();
+    virtual std::shared_ptr<Game> getGame() override;
+    virtual std::shared_ptr<Renderer> getRenderer() override;
 
     friend class Time;
     friend class Game;
@@ -106,6 +111,9 @@ private:
     //NodeController m_nodeManager;
 
     std::shared_ptr<Game> m_game;
+    //std::shared_ptr<Editor> m_editor;
+    std::shared_ptr<Renderer> m_renderer;
+    std::shared_ptr<LayerManager> m_layerManager;
 
     // Window flags.
     Uint32 m_flags = SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;

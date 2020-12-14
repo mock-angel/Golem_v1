@@ -16,6 +16,7 @@
 #include "Res/Scripts/ComponentsAssembly.h"
 #include "Editor/EditorLayer.h"
 #include "Scene/SceneManager.h"
+#include "Graphics/Camera/CameraManager.h"
 
 /*
 #include "NodeController.h"
@@ -54,11 +55,15 @@ Game::Game() {
     m_eventBus = std::make_shared<EventBus>();
     m_eventBusStatic = m_eventBus;
 
+    //FIXME:: Camera is forced before LayerManager. Create and call a start() method.
+
     m_layerManager =  std::make_shared<LayerManager>();
     m_projectManager = std::make_shared<ProjectManager>();
     m_resourceManager = std::make_shared<ResourceManager>();
     m_componentTypeHolder = std::make_shared<ComponentTypeHolder>();
     m_sceneManager =  std::make_shared<SceneManager>();
+
+    camera =  std::make_shared<Camera>();
     ComponentsAssembly::assemble();
 }
 
@@ -79,8 +84,15 @@ void Game::update() {
 }
 
 void Game::start() {
+
+    //FIXME:: CameraManagerLayer must be created before ImGuiLayer.
+    std::shared_ptr<CameraManager> camera_manager = std::make_shared<CameraManager>();
+    m_layerManager->attachLayer(camera_manager);
+
     std::shared_ptr<ImGuiLayer> imgui_layer = std::make_shared<ImGuiLayer>();
     m_layerManager->attachLayer(imgui_layer);
+
+
 }
 
 void Game::render() {

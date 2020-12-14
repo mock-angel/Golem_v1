@@ -22,6 +22,7 @@ public:
     LayerManager();
     virtual ~LayerManager();
 
+    void start();
     void update(){
         for(std::shared_ptr<Layer>& layer: m_updateLayers) layer->update();
     }

@@ -21,7 +21,8 @@ enum EventTypeEnum{
     None = 0,
     WindowEventType,
 
-    KeyboardEventType,
+    KeyDownEventType,
+    KeyUpEventType,
 
     MouseMotionEventType,
     MouseButtonEventType,
@@ -38,10 +39,12 @@ enum EventCategory{
     KeyboardEventCategory = BIT(2),
     InputEventCategory = BIT(3),
     CustomEventCategory = BIT(4),
-    WindowEventCategory = BIT(5)
+    WindowEventCategory = BIT(5),
+    EditorEventCategory = BIT(6),
 };
 
-#define EVENT_CLASS_TYPE(type) static EventTypeEnum GetStaticEventType() {return  type;}\
+#define EVENT_CLASS_TYPE(type) \
+        static EventTypeEnum GetStaticEventType() {return  type;}\
         virtual EventTypeEnum GetEventType() const {return  type;}
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override {return category;}
@@ -53,7 +56,7 @@ public:
     Event(){};
     virtual ~Event(){};
 
-    static EventTypeEnum GetStaticType(){return EventTypeEnum::None;}
+    static EventTypeEnum GetStaticEventType(){return EventTypeEnum::None;}
     virtual EventTypeEnum GetEventType() const = 0;
     virtual int GetCategoryFlags() const = 0;
     /*virtual EventTypeEnum GetEventType() const{
@@ -67,26 +70,36 @@ protected:
 class KeyEvent: public Event{
 public:
     inline int GetKeyCode() const { return m_KeyCode;}
+    inline int GetRepeatCount() const { return m_RepeatCount;}
 
-    EVENT_CLASS_TYPE(EventTypeEnum::KeyboardEventType)
+    EVENT_CLASS_TYPE(EventTypeEnum::KeyDownEventType)
 protected:
-    KeyEvent(int keyCode) : m_KeyCode(keyCode){}
+    KeyEvent(int keyCode, int repeatCount) : m_KeyCode(keyCode), m_RepeatCount(repeatCount){}
 
     int m_KeyCode;
+    int m_RepeatCount;
 };
 
 class KeyPressedEvent: public KeyEvent{
 public:
     KeyPressedEvent(int keyCode, int repeatCount)
-        : KeyEvent(keyCode), m_RepeatCount(repeatCount){}
-
+        : KeyEvent(keyCode, repeatCount) {}
+    EVENT_CLASS_TYPE(EventTypeEnum::KeyDownEventType)
+    EVENT_CLASS_CATEGORY( EventCategory::KeyboardEventCategory | EventCategory::InputEventCategory )
 protected:
 
 private:
-    int m_RepeatCount;
+
 };
 
-
+class KeyReleasedEvent: public KeyEvent{
+public:
+    KeyReleasedEvent(int keyCode, int repeatCount)
+        : KeyEvent(keyCode, repeatCount){}
+    EVENT_CLASS_TYPE(EventTypeEnum::KeyUpEventType)
+    EVENT_CLASS_CATEGORY( EventCategory::KeyboardEventCategory | EventCategory::InputEventCategory )
+protected:
+};
 
 struct WindowEvent: public Event{
     WindowEvent(){m_Type = EventTypeEnum::WindowEventType;}
@@ -102,8 +115,8 @@ public:
         : m_width(t_width), m_height(t_height){m_Type = EventTypeEnum::WindowEventType;}
     EVENT_CLASS_CATEGORY(EventCategory::WindowEventCategory)
 
-    int getWidth(){return m_width;}
-    int getHeight(){return m_height;}
+    inline int getWidth(){return m_width;}
+    inline int getHeight(){return m_height;}
 private:
     int m_width;
     int m_height;
@@ -118,9 +131,9 @@ public:
 
 };
 
-class MouseMovedEvent : public Event{
+class MouseMotionEvent : public Event{
 public:
-    MouseMovedEvent(float x, float y)
+    MouseMotionEvent(float x, float y)
         : m_MouseX(x), m_MouseY(y) {}
 
     inline float GetX() const { return m_MouseX; }
@@ -146,6 +159,31 @@ public:
 private:
     int m_Button;
 };
+
+class MouseButtonEventDown : public MouseButtonEvent{
+public:
+    MouseButtonEventDown(int buttonInt)
+          : MouseButtonEvent(buttonInt) {}
+};
+
+class MouseButtonEventUp : public MouseButtonEvent{
+public:
+    MouseButtonEventUp(int buttonInt)
+          : MouseButtonEvent(buttonInt) {}
+};
+
+class MouseWheelEvent : public Event{
+public:
+    MouseWheelEvent(int t_x, int t_y)
+          : x(t_x), y(t_y) {}
+    inline int GetX(){ return x; }
+    inline int GetY(){ return y; }
+    EVENT_CLASS_TYPE(EventTypeEnum::MouseWheelEventType)
+    EVENT_CLASS_CATEGORY(EventCategory::MouseEventCategory | EventCategory::InputEventCategory)
+private:
+    int x, y;
+};
+
 
 } /* namespace Golem */
 #endif /* CORE_EVENT_EVENT_H_ */

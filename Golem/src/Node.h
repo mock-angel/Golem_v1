@@ -83,12 +83,11 @@ public:
 
     bool m_isSelected = false;
 
-    inline void SetName(const std::string& t_name){
-        m_name = t_name;
-    }
-    inline const std::string& GetName(){
-        return m_name;
-    }
+    inline void SetName(const std::string& t_name){ m_name = t_name; }
+    inline const std::string& GetName(){ return m_name;  }
+
+    //inline void makeEditorOnly(){ isEditorObject = true; }
+    //inline bool isEditorNode(){return isEditorObject;}
 private:
     std::string m_name = "NOT NAMED";
     int m_rid = 0;
@@ -116,6 +115,7 @@ private:
 
     friend class NodeLinkedList;
 
+    //bool isEditorObject = false;
     std::weak_ptr<Node> m_self;
     std::weak_ptr<NodeController> m_nodeController;
 };

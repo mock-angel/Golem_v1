@@ -15,22 +15,21 @@ namespace Golem {
 
 class ShaderResource : public Resource{
 public:
-
     Shader m_shader;
+
     ShaderResource();
     ShaderResource(const std::string& str);
     ~ShaderResource();
 
     virtual void onPrepare() override;
     virtual bool onLoad() override;
-public:
+    inline void use(){ m_shader.use(); }
+    inline int getShaderId(){ return m_shader.getID(); }
+private:
+
     std::string m_vshaderData;
     std::string m_fshaderData;
     std::string m_gshaderData;
-
-    inline int getShaderId(){
-        return m_shader.getID();
-    }
 };
 
 using ShaderRef = std::shared_ptr<ShaderResource>;
