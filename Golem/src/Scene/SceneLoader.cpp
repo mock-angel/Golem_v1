@@ -10,7 +10,8 @@
 #include <unordered_map>
 
 #include "yaml-cpp/yaml.h"
-#include "Components/ComponentTypeHolder.h"
+
+#include "../Components/ComponentOldTypeHolder.h"
 #include "Node.h"
 #include "Debug.h"
 
@@ -34,13 +35,13 @@ std::shared_ptr<Node> SceneLoader::loadScene(const std::string& path){
     std::list<long> componentsFileId;
 
     std::unordered_map<long, std::shared_ptr<Node>> nodesMap;
-    std::unordered_map<long, std::shared_ptr<Component>> componentsMap;
+    std::unordered_map<long, std::shared_ptr<ComponentOld>> componentsMap;
 
     nodesFileId = yamlNode["m_NodesList"].as<std::list<long>>();
     componentsFileId = yamlNode["m_ComponentsList"].as<std::list<long>>();
 
     for(long compoYaml : componentsFileId){
-        std::shared_ptr<Component> createdComponent;
+        std::shared_ptr<ComponentOld> createdComponent;
         YAML::Node compoNode = yamlNode[compoYaml];
 
         std::string compoType = compoNode["m_ComponentType"].as<std::string>();
@@ -62,7 +63,7 @@ std::shared_ptr<Node> SceneLoader::loadScene(const std::string& path){
         nodesMap[nodeYaml] = createdNode;
         createdNode->SetName(yamlNode[nodeYaml]["m_Name"].as<std::string>());
         for(long compoNum: compos){
-            std::weak_ptr<Component> componentToAdd = componentsMap[compoNum];
+            std::weak_ptr<ComponentOld> componentToAdd = componentsMap[compoNum];
             createdNode->addComponent(componentToAdd);
         }
 

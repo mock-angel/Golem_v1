@@ -5,12 +5,12 @@
  *      Author: anantha
  */
 
-#ifndef COMPONENTS_COMPONENTTYPEHOLDER_H_
-#define COMPONENTS_COMPONENTTYPEHOLDER_H_
+#ifndef COMPONENTS_COMPONENTOLDTYPEHOLDER_H_
+#define COMPONENTS_COMPONENTOLDTYPEHOLDER_H_
 
 #include <map>
 
-#include "../Component.h"
+#include "ComponentOld.h"
 
 namespace Golem {
 
@@ -28,12 +28,12 @@ public:
     inline static ComponentTypeHolder* getInstance(){
         return m_Instance;
     }
-    static std::shared_ptr<Component> getComponent(const std::string& className);
+    static std::shared_ptr<ComponentOld> getComponent(const std::string& className);
 private:
     static ComponentTypeHolder* m_Instance;
-    std::map<std::string, std::shared_ptr<Component>> m_components;
+    std::map<std::string, std::shared_ptr<ComponentOld>> m_components;
 };
 
 } /* namespace Golem */
 
-#endif /* COMPONENTS_COMPONENTTYPEHOLDER_H_ */
+#endif /* COMPONENTS_COMPONENTOLDTYPEHOLDER_H_ */

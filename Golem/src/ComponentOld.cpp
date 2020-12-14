@@ -5,7 +5,7 @@
  *      Author: anantha
  */
 
-#include "Component.h"
+#include "ComponentOld.h"
 
 #include <assert.h>
 
@@ -13,39 +13,39 @@
 
 namespace Golem {
 
-Component::Component() {
+ComponentOld::ComponentOld() {
     // TODO Auto-generated constructor stub
 
 }
 
-Component::~Component() {
+ComponentOld::~ComponentOld() {
     // TODO Auto-generated destructor stub
 }
 
 
-void Component::enableUpdates(bool value){
+void ComponentOld::enableUpdates(bool value){
     updateComponent = value;
 }
 
-void Component::Start(){
+void ComponentOld::Start(){
 
 }
 
-void Component::render(){
+void ComponentOld::render(){
     Debug::log("Component::render() executed");
 }
 
-void Component::update(){
+void ComponentOld::update(){
 
 }
 
-std::weak_ptr<Node> Component::getGameObject(){
+std::weak_ptr<Node> ComponentOld::getGameObject(){
 
     assert(!parentNode.expired());
     return parentNode;
 }
 
-void Component::setOwner(std::weak_ptr<Node> t_node){
+void ComponentOld::setOwner(std::weak_ptr<Node> t_node){
     parentNode = t_node;
 }
 

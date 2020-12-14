@@ -6,8 +6,8 @@
  */
 
 #include "Renderable.h"
-#include "ComponentController.h"
 #include "../Game.h"
+#include "ComponentOldController.h"
 
 namespace Golem {
 

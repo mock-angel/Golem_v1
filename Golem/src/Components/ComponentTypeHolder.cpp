@@ -5,8 +5,7 @@
  *      Author: anantha
  */
 
-#include "ComponentTypeHolder.h"
-
+#include "ComponentOldTypeHolder.h"
 #include "Debug.h"
 
 namespace Golem {
@@ -22,7 +21,7 @@ ComponentTypeHolder::~ComponentTypeHolder() {
     // TODO Auto-generated destructor stub
 }
 
-std::shared_ptr<Component> ComponentTypeHolder::getComponent(const std::string& className){
+std::shared_ptr<ComponentOld> ComponentTypeHolder::getComponent(const std::string& className){
     if(m_Instance == nullptr) Debug::log("ComponentTypeHolder::m_Instance is nullptr");
 
     if(m_Instance->m_components.find(className) != m_Instance->m_components.end()) {

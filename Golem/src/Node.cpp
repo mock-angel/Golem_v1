@@ -174,7 +174,7 @@ void Node::print(std::string _str){
     std::cout << _str << std::endl;
 }
 
-void Node::addComponent(std::weak_ptr<Component> component){
+void Node::addComponent(std::weak_ptr<ComponentOld> component){
     //print("Component validity :"+ std::to_string(component || 0));
     m_nodeComponents.push_back(component);
     //m_nodeComponents.push_back(component);
@@ -185,7 +185,7 @@ void Node::addComponent(std::weak_ptr<Component> component){
     print("Component validity- :"+ std::to_string(component.lock() || 0));
 }
 
-void Node::removeComponent(std::weak_ptr<Component> component){
+void Node::removeComponent(std::weak_ptr<ComponentOld> component){
     /*
     auto it = std::find(m_nodeComponents.begin(), m_nodeComponents.end(), component);
 

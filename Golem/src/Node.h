@@ -14,8 +14,8 @@
 #include <iterator>
 #include <memory>
 
+#include "ComponentOld.h"
 
-#include "Component.h"
 #include "Core/LooseRef.h"
 #include "Core/Math/Quaternion.h"
 #include "Core/Math/Vector3.h"
@@ -64,8 +64,8 @@ public:
 
     template <typename T>
     std::weak_ptr<T> getComponent();
-    void addComponent(std::weak_ptr<Component> component);
-    void removeComponent(std::weak_ptr<Component> component);
+    void addComponent(std::weak_ptr<ComponentOld> component);
+    void removeComponent(std::weak_ptr<ComponentOld> component);
     std::weak_ptr<Transform> getTransform();
 
     void setController(std::weak_ptr<NodeController> t_nodeController){
@@ -97,7 +97,7 @@ private:
     std::vector<std::weak_ptr<Node>> m_childNodesVec;
     //std::map<int, Node*> m_childNodesUMap;
 
-    std::vector<std::weak_ptr<Component>> m_nodeComponents;
+    std::vector<std::weak_ptr<ComponentOld>> m_nodeComponents;
 
     Node* m_next_node = nullptr;
     Node* m_prev_node = nullptr;

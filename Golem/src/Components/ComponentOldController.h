@@ -5,14 +5,14 @@
  *      Author: anantha
  */
 
-#ifndef COMPONENTS_COMPONENTCONTROLLER_H_
-#define COMPONENTS_COMPONENTCONTROLLER_H_
+#ifndef COMPONENTS_COMPONENTOLDCONTROLLER_H_
+#define COMPONENTS_COMPONENTOLDCONTROLLER_H_
 
 #include <list>
 #include <memory>
 #include <map>
 
-#include "../Component.h"
+#include "ComponentOld.h"
 #include "SortingLayerEnum.h"
 
 namespace Golem {
@@ -27,9 +27,9 @@ public:
     ComponentController();
     virtual ~ComponentController();
 
-    std::list<std::shared_ptr<Component>> m_allComponents;
+    std::list<std::shared_ptr<ComponentOld>> m_allComponents;
 
-    std::map<int, std::list<std::weak_ptr<Component>>> m_renderable;
+    std::map<int, std::list<std::weak_ptr<ComponentOld>>> m_renderable;
 
     const std::list<SortingLayer> renderOrder = {
             SortingLayer::Layer0,
@@ -56,9 +56,9 @@ public:
     void renderComponents();
 
 
-    void add(std::shared_ptr<Component> component);
+    void add(std::shared_ptr<ComponentOld> component);
 };
 
 } /* namespace Golem */
 
-#endif /* COMPONENTS_COMPONENTCONTROLLER_H_ */
+#endif /* COMPONENTS_COMPONENTOLDCONTROLLER_H_ */

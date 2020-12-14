@@ -8,8 +8,7 @@
 
 #include "ComponentsAssembly.h"
 
-#include "../../Component.h"
-
+#include "../../ComponentOld.h"
 #include "CameraScript.h"
 #include "SpriteScript.h"
 #include "Transform.h"

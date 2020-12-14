@@ -5,8 +5,8 @@
  *      Author: anantha
  */
 
-#ifndef COMPONENT_H_
-#define COMPONENT_H_
+#ifndef COMPONENTOLD_H_
+#define COMPONENTOLD_H_
 
 #include <memory>
 #include <type_traits>
@@ -43,8 +43,8 @@ namespace Golem {
         static ClassName constructNew(){\
             return ClassName();\
         }\
-        virtual std::shared_ptr<Component> createNewShared() override{\
-            return std::dynamic_pointer_cast<Component>(std::make_shared<ClassName>());\
+        virtual std::shared_ptr<ComponentOld> createNewShared() override{\
+            return std::dynamic_pointer_cast<ComponentOld>(std::make_shared<ClassName>());\
         }\
         DEFINE_CLASS_NAME(ClassName)\
     private: \
@@ -56,7 +56,7 @@ namespace Golem {
 
 class Node;
 
-class Component: public Renderable {
+class ComponentOld: public Renderable {
     std::weak_ptr<Node> parentNode;
 
     bool updateComponent = true;
@@ -83,7 +83,7 @@ public:
          return "Component";
     }
 
-    virtual std::shared_ptr<Component> createNewShared(){
+    virtual std::shared_ptr<ComponentOld> createNewShared(){
         return nullptr;
     }
 
@@ -93,10 +93,10 @@ public:
         std::dynamic_pointer_cast<Component>();
     }*/
 
-    Component();
-    virtual ~Component();
+    ComponentOld();
+    virtual ~ComponentOld();
 };
 
 } /* namespace Golem */
 
-#endif /* COMPONENT_H_ */
+#endif /* COMPONENTOLD_H_ */

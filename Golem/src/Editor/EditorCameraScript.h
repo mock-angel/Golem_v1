@@ -8,14 +8,14 @@
 #ifndef EDITOR_EDITORCAMERASCRIPT_H_
 #define EDITOR_EDITORCAMERASCRIPT_H_
 
-#include "Component.h"
-#include SCRIPT_HEADERS
+#include "../ComponentOld.h"
+#include "../Components/ComponentOldTypeHolder.h"
 
 namespace Golem {
 
 class Camera;
 
-class EditorCameraScript : public Component {
+class EditorCameraScript : public ComponentOld {
     GAME_SCRIPT(EditorCameraScript);
 public:
     //EditorCameraScript();

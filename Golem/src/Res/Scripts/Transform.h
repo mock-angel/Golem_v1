@@ -10,17 +10,17 @@
 
 #include <glm/gtx/quaternion.hpp>
 
-#include "../../Component.h"
-#include "../../Core/Math/Vector2.h"
-#include "../../GLM.h"
+#include "ComponentOld.h"
+#include "Components/ComponentOldTypeHolder.h"
+#include "Core/Math/Vector2.h"
+#include "GLM.h"
 
-#include SCRIPT_HEADERS
 
 namespace Golem {
 
 class Node;
 
-class Transform: public Component {
+class Transform: public ComponentOld {
     GAME_SCRIPT(Transform)
 
 public:

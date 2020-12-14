@@ -8,17 +8,17 @@
 #ifndef RES_SCRIPTS_SPRITESCRIPT_H_
 #define RES_SCRIPTS_SPRITESCRIPT_H_
 
-#include "../../Component.h"
-#include "../../Components/Color.h"
-#include "../../Graphics/Sprites/Sprite.h"
+#include "ComponentOld.h"
+#include "Components/Color.h"
+#include "Components/ComponentOldTypeHolder.h"
+#include "Graphics/Sprites/Sprite.h"
 
-#include SCRIPT_HEADERS
 
 namespace Golem {
 
 class Transform;
 
-class SpriteScript : public Component {
+class SpriteScript : public ComponentOld {
     GAME_SCRIPT(SpriteScript)
 
 public:

@@ -8,12 +8,12 @@
 #ifndef RES_SCRIPTS_CAMERASCRIPT_H_
 #define RES_SCRIPTS_CAMERASCRIPT_H_
 
+#include "../../ComponentOld.h"
+#include "../../Components/ComponentOldTypeHolder.h"
 #include "Graphics/Camera/Camera.h"
 
 #include "Core/Event/Event.h"
 #include "Debug.h"
-#include "Component.h"
-#include SCRIPT_HEADERS
 #include "Core/Event/EventCallback.h"
 
 namespace Golem {
@@ -29,7 +29,7 @@ public:
     virtual ~IWindowEventListener(){};
 };
 
-class CameraScript : public Component{
+class CameraScript : public ComponentOld{
     GAME_SCRIPT(CameraScript)
 
 public:

@@ -31,7 +31,7 @@ ImGuiScene::ImGuiScene() {
     Vector3 v = Vector3(0, 0, -3);
     auto editorCameraNode = Node::Instantiate(v, q);
 
-    std::shared_ptr<Component> editorCamCompo = Golem::ComponentTypeHolder::getComponent("EditorCameraScript")->createNewShared();
+    std::shared_ptr<ComponentOld> editorCamCompo = Golem::ComponentTypeHolder::getComponent("EditorCameraScript")->createNewShared();
     editorCameraNode.lock()->addComponent(editorCamCompo);
     //editorCameraNode.lock()->getComponent<EditorCameraSystem>();
 

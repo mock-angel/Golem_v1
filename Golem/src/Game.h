@@ -10,10 +10,10 @@
 
 #include <memory>
 
+#include "Components/ComponentOldController.h"
 #include "Graphics/Camera/Camera.h"
 #include "Window.h"
 #include "NodeController.h"
-#include "Components/ComponentController.h"
 #include "Graphics/Shader/ShaderLoader.h"
 #include "Core/Event/EventBus.h"
 #include "Core/Input/InputSystem.h"

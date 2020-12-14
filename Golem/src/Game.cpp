@@ -7,12 +7,12 @@
 
 #include "Game.h"
 
+#include "Components/ComponentOldTypeHolder.h"
 #include "Debug.h"
 #include "Window.h"
 
 #include "Core/GUI/ImGuiLayer.h"
 #include "Core/ProjectManager/ProjectManager.h"
-#include "Components/ComponentTypeHolder.h"
 #include "Res/Scripts/ComponentsAssembly.h"
 #include "Editor/EditorLayer.h"
 #include "Scene/SceneManager.h"

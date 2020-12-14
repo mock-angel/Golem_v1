@@ -10,16 +10,16 @@
 #include <iostream>
 #include <memory>
 
+#include "ComponentOld.h"
+#include "Components/ComponentOldTypeHolder.h"
 #include "Debug.h"
 #include "Node.h"
-#include "Component.h"
 #include "Core/Math/Vector2.h"
 #include "Graphics/Shader/Shader.h"
 #include "Res/Scripts/SpriteScript.h"
 #include "Res/Scripts/Transform.h"
 #include "Res/Scripts/CameraScript.h"
 #include "imgui.h"
-#include "Components/ComponentTypeHolder.h"
 
 GameWindow::GameWindow() {
     // TODO Auto-generated constructor stub
@@ -48,10 +48,10 @@ void GameWindow::awake(){
     //Golem::Node::Instantiate().lock()->addComponent(compo1);
     Golem::Node::print("ending call to Node::Instantiate()");
 
-    std::shared_ptr<Golem::Component> transformCompo = Golem::ComponentTypeHolder::getComponent("Transform")->createNewShared();
+    std::shared_ptr<Golem::ComponentOld> transformCompo = Golem::ComponentTypeHolder::getComponent("Transform")->createNewShared();
     n.lock()->addComponent(transformCompo);
 
-    std::shared_ptr<Golem::Component> cameraCompo = std::dynamic_pointer_cast<Golem::Component>(std::make_shared<Golem::CameraScript>());
+    std::shared_ptr<Golem::ComponentOld> cameraCompo = std::dynamic_pointer_cast<Golem::ComponentOld>(std::make_shared<Golem::CameraScript>());
     n.lock()->addComponent(cameraCompo);
 }
 

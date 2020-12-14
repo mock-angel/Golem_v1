@@ -5,13 +5,12 @@
  *      Author: anantha
  */
 
-#include "ComponentController.h"
-
 #include <memory>
 #include <string>
 
 #include "../Node.h"
 #include "../Debug.h"
+#include "ComponentOldController.h"
 
 namespace Golem {
 
@@ -20,7 +19,7 @@ ComponentController::ComponentController() {
     for(int i = 0; i < 14; i++){
         //m_renderable.insert({i, std::list<std::shared_ptr<Component>>});
         //m_renderable.insert({i, std::list<std::shared_ptr<Component>>()});
-        m_renderable[i] = std::list<std::weak_ptr<Component>>();
+        m_renderable[i] = std::list<std::weak_ptr<ComponentOld>>();
     }
 }
 
@@ -30,8 +29,8 @@ ComponentController::~ComponentController() {
 
 void ComponentController::updateComponents(){
     // U
-    Component* component = nullptr;
-    for(std::shared_ptr<Component> &component_ptr : m_allComponents) {
+    ComponentOld* component = nullptr;
+    for(std::shared_ptr<ComponentOld> &component_ptr : m_allComponents) {
         component = component_ptr.get();
 
         if(component->isUpdatable()) component->update();
@@ -49,7 +48,7 @@ void ComponentController::clearAllLayers(){
 void ComponentController::sortRenderable(){
     //Debug::log("Components count::"+std::to_string(m_allComponents.size()));
 
-    for(std::shared_ptr<Component> component_ptr : m_allComponents){
+    for(std::shared_ptr<ComponentOld> component_ptr : m_allComponents){
 
         //Node::print("Component validity :"+ std::to_string(component_ptr || 0));
         if(component_ptr->isRenderable()) {
@@ -62,7 +61,7 @@ void ComponentController::sortRenderable(){
 
 void ComponentController::renderAll(){
     for(const SortingLayer& renderLayerValue: renderOrder){
-        for(std::weak_ptr<Component> comp: m_renderable[renderLayerValue]){
+        for(std::weak_ptr<ComponentOld> comp: m_renderable[renderLayerValue]){
 
             comp.lock()->render();
 
@@ -80,7 +79,7 @@ void ComponentController::renderComponents(){
     renderAll();
 }
 
-void ComponentController::add(std::shared_ptr<Component> component){
+void ComponentController::add(std::shared_ptr<ComponentOld> component){
 
     m_allComponents.push_back(component);
     component->Start();
