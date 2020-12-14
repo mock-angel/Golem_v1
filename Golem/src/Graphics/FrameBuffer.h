@@ -18,8 +18,11 @@ public:
     void create(int width, int height);
     void bind();
     void unbind();
+    unsigned int getTexture(){return m_TextureObject;}//Temp
 private:
-    unsigned int m_frameBuffer;
+    unsigned int m_FBO;
+    unsigned int m_TextureObject;
+    unsigned int m_RBO;
 };
 
 } /* namespace Golem */

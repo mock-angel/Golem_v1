@@ -20,7 +20,7 @@ public:
 
     void load(const char* str );
     void create(int width, int height);
-
+    void resize(int width, int height);
     inline unsigned int get(){
         return m_texture;
     }

@@ -20,10 +20,12 @@
 #include "imgui_impl_sdl.h"
 #include "imgui.h"
 #include "Graphics/BatchRenderer.h"
+#include "Graphics/FrameBuffer.h"
 
 namespace Golem {
 
 Batch* batch = nullptr;
+FrameBuffer* frame = nullptr;
 
 WindowRenderer::~WindowRenderer(){
 
@@ -32,6 +34,15 @@ WindowRenderer::~WindowRenderer(){
 void WindowRenderer::render_sequence(){
 
     if(batch == nullptr) batch = new Batch();
+    if(frame == nullptr) {
+        frame = new FrameBuffer();
+        frame->create(720, 720);
+    }
+
+    glClearColor(.3, .1, .2, 1.0);
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+
+    frame->bind();
     //glClearColor(0.2, 0.3, 0.3, 1.0);
     glClearColor(.3, .1, .2, 1.0);
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -43,6 +54,8 @@ void WindowRenderer::render_sequence(){
     batch->Render();
 
     render();
+
+    frame->unbind();
 }
 
 void WindowRenderer::setGLViewport(){

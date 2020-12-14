@@ -19,6 +19,9 @@
 
 namespace Golem {
 
+//Batch item common properties: camera, shader
+//Batch item variable properties: transform, color, texture coordinates, texture
+
 Batch::Batch(){
     _init();
 }
@@ -34,13 +37,13 @@ void Batch::_init(){
         m_IndexBuffer[i + 5] = offset + 0;
     }
 
-    float vertices[] = {
+    /*float vertices[] = {
             // positions          // colors                 // texture coords
              1.f,  1.f, 0.0f,   1.0f, 0.0f, 0.0f, 1.0f,   1.0f, 1.0f,   0.0f, // top right
              1.f, -1.f, 0.0f,   0.0f, 1.0f, 0.0f, 1.0f,   1.0f, 0.0f,   0.0f, // bottom right
             -1.f, -1.f, 0.0f,   0.0f, 0.0f, 1.0f, 1.0f,   0.0f, 0.0f,   0.0f, // bottom left
             -1.f,  1.f, 0.0f,   1.0f, 1.0f, 0.0f, 1.0f,   0.0f, 1.0f,   0.0f, // top left
-    };
+    };*/
 
     Transform t1;
     //t1.position.Vector3(0, 0, 0);
@@ -59,21 +62,21 @@ void Batch::_init(){
 
     glCreateBuffers(1, &m_VBO);
     glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(m_VertexBuffer), m_VertexBuffer.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(m_VertexBuffer), nullptr, GL_DYNAMIC_DRAW);
 
     glEnableVertexArrayAttrib(m_VAO, 0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 10 * sizeof(float), (const void*) (offsetof(Vertex, Position)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*) (offsetof(Vertex, Position)));
     //glEnableVertexAttribArray(0);
 
     glEnableVertexArrayAttrib(m_VAO, 1);
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 10 * sizeof(float), (const void*) (offsetof(Vertex, Color)));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*) (offsetof(Vertex, Color)));
     //glEnableVertexAttribArray(1);
 
-    uint32_t indices[] = {
-            0, 1, 2, 2, 3, 0,
-            4, 5, 6, 6, 7, 4,
-            8, 9, 10, 10, 11, 8,
-    };
+    glEnableVertexArrayAttrib(m_VAO, 2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*) (offsetof(Vertex, TexCoord)));
+
+    glEnableVertexArrayAttrib(m_VAO, 3);
+    glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*) (offsetof(Vertex, TexIndex)));
 
     glCreateBuffers(1, &m_IBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
@@ -85,11 +88,15 @@ void Batch::_init(){
 
 void Batch::Render(){
 
+    glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(m_VertexBuffer), m_VertexBuffer.data());
+
     //glClear(GL_COLOR_BUFFER_BIT);
     glUseProgram(m_Shader->getShaderId());
 
     glm::mat4 projView_matrix = Game::getCamera().getClipMatrix();
-    m_Shader->m_shader.setMat4("clip", projView_matrix );
+    m_Shader->m_shader.setMat4("u_Clip", projView_matrix );
+    //m_Shader->m_shader.setIntArray("u_Clip", m_TextureArray.data(), 16 );
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glBindVertexArray(m_VAO);

@@ -58,30 +58,32 @@ public:
         v0.Position = {transformed[0][0], transformed[0][1], transformed[0][2]};
         v0.Color = t_color;
         v0.TexCoord = {1.0f, 1.0f,};
-        v0.TexIndex = 0;
+        v0.TexIndex = 1;
 
         Vertex v1;
         v1.Position = {transformed[1][0], transformed[1][1], transformed[1][2]};
         v1.Color = t_color;
         v1.TexCoord = {1.0f, 1.0f,};
-        v1.TexIndex = 0;
+        v1.TexIndex = 1;
 
         Vertex v2;
         v2.Position = {transformed[2][0], transformed[2][1], transformed[2][2]};
         v2.Color = t_color;
         v2.TexCoord = {1.0f, 1.0f,};
-        v2.TexIndex = 0;
+        v2.TexIndex = 1;
 
         Vertex v3;
         v3.Position = {transformed[3][0], transformed[3][1], transformed[3][2]};
         v3.Color = t_color;
         v3.TexCoord = {1.0f, 1.0f,};
-        v3.TexIndex = 0;
+        v3.TexIndex = 1;
 
         (m_VertexBuffer.at(m_CurrentVertexCount)) = v0;
         (m_VertexBuffer.at(m_CurrentVertexCount + 1)) = v1;
         (m_VertexBuffer.at(m_CurrentVertexCount + 2)) = v2;
         (m_VertexBuffer.at(m_CurrentVertexCount + 3)) = v3;
+
+        m_TextureArray[m_CurrentQuadCount] = 1;
 
         m_CurrentVertexCount += 4;
         m_CurrentQuadCount++;
@@ -95,6 +97,7 @@ private:
     std::array<Vertex, m_MaxIndexCount> m_VertexBuffer;
     int m_CurrentVertexCount = 0;
     int m_CurrentQuadCount = 0;
+    std::array<int, 16> m_TextureArray;
 
     unsigned int m_VAO;
     unsigned int m_VBO;

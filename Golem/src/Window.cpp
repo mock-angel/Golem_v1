@@ -28,6 +28,21 @@
 
 using namespace std;
 
+void GLAPIENTRY
+MessageCallback( GLenum source,
+                 GLenum type,
+                 GLuint id,
+                 GLenum severity,
+                 GLsizei length,
+                 const GLchar* message,
+                 const void* userParam )
+{
+  fprintf( stderr, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+}
+
+
 namespace Golem {
 
 Window* Window::Instance = nullptr;
@@ -139,8 +154,8 @@ void Window::Init(){
 
     hide();
     //SDL_HideWindow(m_window);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
     m_context = SDL_GL_CreateContext(m_sdlWindow);
@@ -151,6 +166,10 @@ void Window::Init(){
     //self.title = self.m_title
 
     glewInit();
+
+    // During init, enable debug output
+    glEnable              ( GL_DEBUG_OUTPUT );
+    glDebugMessageCallback( MessageCallback, 0 );
 
     Gui::Init(m_sdlWindow, m_sdlWindow);
 

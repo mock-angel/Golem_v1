@@ -1,16 +1,21 @@
-#version 330 core
-layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec4 aColor; 
-//layout (location = 2) in vec2 aTexCoord;
+#version 450 core
+layout (location = 0) in vec3 a_Pos;
+layout (location = 1) in vec4 a_Color; 
+layout (location = 2) in vec2 a_TexCoord;
+layout (location = 3) in vec2 a_Texture;
  
-out vec4 ourColor; // output a color to the fragment shader
-//out vec2 TexCoord;
+out vec4 v_Color; // output a color to the fragment shader
+out vec2 v_TexCoord;
+out float v_TexIndex;
+//out sampler2D v_Texture;
 
-uniform mat4 clip = mat4(1);
+uniform mat4 u_Clip = mat4(1);
 
 void main()
 {
-    gl_Position = clip  * vec4(aPos, 1.0);
-    ourColor = aColor; // set ourColor to the input color we got from the vertex data
-    //TexCoord = vec2(aTexCoord.x, 1.0-aTexCoord.y);
+    gl_Position = u_Clip  * vec4(a_Pos, 1.0);
+    v_Color = a_Color;
+    v_TexCoord = vec2(a_TexCoord.x, 1.0-a_TexCoord.y);
+    v_TexIndex = 0;
+    //v_Texture = a_Texture;
 } 
