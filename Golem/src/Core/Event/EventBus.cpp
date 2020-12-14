@@ -28,12 +28,17 @@ void EventBus::Publish(Event& t_event){
     else if(m_map.find(m_bufferEventType) != m_map.end())
         m_callbackListBuffer = &m_map[m_bufferEventType];
 
-    updateCache();
-    //Debug::log("updateCache");
-    for(std::shared_ptr<IEventCallback>& callback: *m_callbackListBuffer) callback->call(t_event);
-    //Debug::log("for 1");
+    else {
+        m_bufferEventType = EventTypeEnum::None;
+        m_callbackListBuffer = nullptr;
+    }
+
+    if(m_callbackListBuffer)
+        for(std::shared_ptr<IEventCallback>& callback: *m_callbackListBuffer) callback->call(t_event);
     for(std::shared_ptr<Layer>& layer: m_listeners)  layer->onEvent(t_event);
-    //Debug::log("for 2");
+
+
+    updateCache();
 }
 
 } /* namespace Golem */

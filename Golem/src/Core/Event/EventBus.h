@@ -29,7 +29,6 @@ public:
     void Publish(Event& t_event);
     void Subscribe(EventTypeEnum t_event, std::shared_ptr<IEventCallback>& m_dispacher){
         m_map[t_event].push_back(m_dispacher);
-        Debug::log("Subscribe " + std::to_string(t_event));
     }
     void UnSubscribe(EventTypeEnum& t_event, std::shared_ptr<IEventCallback>& m_dispacher){
         m_map[t_event].remove(m_dispacher);
@@ -42,9 +41,7 @@ private:
         m_callbackListCache = m_callbackListBuffer;
         m_cacheEventType = m_bufferEventType;
     }
-    inline void addListener(std::shared_ptr<Layer>& t_layer){
-        m_listeners.push_back(t_layer);
-    }
+    inline void addListener(std::shared_ptr<Layer>& t_layer){ m_listeners.push_back(t_layer); }
     std::unordered_map<EventTypeEnum, std::list<std::shared_ptr<IEventCallback>>> m_map;
 
     std::list<std::shared_ptr<Layer>> m_listeners;
